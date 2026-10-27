@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>翻页倒计时 - 在线倒计时器，分钟预设与自定义 | Flip 一刻</title>
+<meta name="description" content="浏览器里的免费在线翻页倒计时：1 到 45 分钟一键预设，自定义时分秒，归零哔声提醒，可全屏挂在会议室或教室大屏，无需下载，打开即用。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/countdown.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="翻页倒计时 - 在线倒计时器，分钟预设与自定义 | Flip 一刻">
+<meta property="og:description" content="浏览器里的免费在线翻页倒计时：1 到 45 分钟一键预设，自定义时分秒，归零哔声提醒，可全屏挂在会议室或教室大屏，无需下载，打开即用。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/countdown.html">
+<meta property="og:image" content="https://flipclock.sts.jx.cn/og-countdown.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="翻页倒计时 - 在线倒计时器，分钟预设与自定义 | Flip 一刻">
+<meta name="twitter:description" content="浏览器里的免费在线翻页倒计时：1 到 45 分钟一键预设，自定义时分秒，归零哔声提醒，可全屏挂在会议室或教室大屏，无需下载，打开即用。">
+<meta name="twitter:image" content="https://flipclock.sts.jx.cn/og-countdown.png">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--ch:min(44vh,19vw);
+--cw:calc(var(--ch)*.72);
+--gap:calc(var(--ch)*.07);
+--rad:calc(var(--ch)*.042);
+--dfs:calc(var(--ch)*.92);
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+.fsbtn{position:fixed;left:18px;bottom:16px;z-index:30;width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:2px;border:none;background:transparent;cursor:pointer;color:rgba(236,232,226,.42);transition:color .25s,background .25s}
+.fsbtn:hover{color:rgba(236,232,226,.9);background:rgba(236,232,226,.06)}
+.fsbtn svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.fsbtn .ic-cmp{display:none}
+.fsbtn.on .ic-exp{display:none}
+.fsbtn.on .ic-cmp{display:block}
+main{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:84px 20px 60px}
+.clockrow{position:relative;display:flex;gap:var(--gap);align-items:center}
+.clockrow::after{content:"";position:absolute;left:4%;right:4%;bottom:calc(var(--ch)*-.18);height:calc(var(--ch)*.15);background:radial-gradient(50% 100% at 50% 50%,rgba(0,0,0,.68),transparent 72%);filter:blur(10px);z-index:-1}
+.card{position:relative;display:flex;width:calc(var(--cw)*2);height:var(--ch);border-radius:var(--rad);overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.5),0 calc(var(--ch)*.2) calc(var(--ch)*.42) rgba(0,0,0,.55),inset 0 1px 0 rgba(255,246,230,.06),inset 0 -1px 0 rgba(0,0,0,.55)}
+.card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#2e2b28 0%,#201d1b 38%,#0c0b0a 49.5%,#0c0b0a 50.5%,#1b1815 56%,#100e0c 100%)}
+.card::after{content:"";position:absolute;left:0;right:0;top:calc(50% - 3.2%);height:6.4%;background:linear-gradient(180deg,rgba(0,0,0,.3),rgba(0,0,0,.7) 48%,rgba(0,0,0,.7) 52%,rgba(0,0,0,.28));z-index:1;pointer-events:none}
+.seam{position:absolute;left:0;right:0;top:calc(50% - 2px);height:4px;background:#040403;z-index:6}
+.seam::after{content:"";position:absolute;left:0;right:0;top:calc(50% - 1px);height:1px;background:rgba(236,232,226,.3);box-shadow:0 0 7px rgba(236,232,226,.16)}
+.dg{position:relative;width:50%;height:100%;perspective:calc(var(--ch)*1.6)}
+.dg span{position:absolute;left:0;width:100%;height:50%;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.dg span::after{content:var(--d,"0");position:absolute;left:0;width:100%;height:200%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:var(--dfs);font-weight:400;letter-spacing:0;line-height:1;font-variant-numeric:tabular-nums;color:transparent;background:linear-gradient(180deg,#faf7f1 0%,#e6e1d8 55%,#c8c2b7 100%);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5));transform:scaleX(.92) translateY(-.015em)}
+.h-t{top:0;z-index:2}
+.h-b{top:50%;z-index:2}
+.h-t::after{top:0}
+.h-b::after{top:-100%}
+.f-f{top:0;z-index:4;transform-origin:50% 100%;background:linear-gradient(180deg,#2c2a27,#211f1d);display:none;will-change:transform}
+.f-b{top:50%;z-index:3;transform-origin:50% 0%;background:linear-gradient(180deg,#131110,#0d0c0b);display:none;will-change:transform}
+.f-f::after{top:0}
+.f-b::after{top:-100%}
+.f-f::before,.f-b::before{content:"";position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+.f-f.run{display:flex;animation:fdown .3s cubic-bezier(.4,.08,.55,.98) forwards}
+.f-b.run{display:flex;animation:fup .3s cubic-bezier(.4,.08,.55,.98) both}
+.f-f.run::before{animation:fshade .3s cubic-bezier(.4,0,.55,1) forwards}
+.f-b.run::before{animation:fshade2 .3s cubic-bezier(.4,0,.55,1) forwards}
+@keyframes fdown{from{transform:rotateX(0)}to{transform:rotateX(-180deg)}}
+@keyframes fup{from{transform:rotateX(180deg)}to{transform:rotateX(0)}}
+@keyframes fshade{from{opacity:0}to{opacity:.34}}
+@keyframes fshade2{from{opacity:.34}to{opacity:0}}
+.dg.fast .f-f.run{animation-duration:.12s}
+.dg.fast .f-b.run{animation-duration:.12s}
+.dg.fast .f-f.run::before{animation-duration:.12s}
+.dg.fast .f-b.run::before{animation-duration:.12s}
+.card.snap .seam::after{box-shadow:0 0 10px rgba(250,247,241,.5)}
+@media (prefers-reduced-motion: reduce){.f-f,.f-b{display:none!important}}
+.ctl{margin-top:38px;display:flex;flex-direction:column;gap:12px;align-items:center}
+.chips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.chips button{font-size:13px;padding:8px 18px;border-radius:2px;border:1px solid rgba(236,232,226,.22);background:rgba(236,232,226,.03);color:rgba(236,232,226,.65);cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.chips button:hover{color:var(--ink);border-color:rgba(236,232,226,.45)}
+.chips button.on{color:var(--ink);border-color:rgba(236,232,226,.5);background:rgba(236,232,226,.12)}
+.cust{display:flex;align-items:center;gap:10px;font-size:12.5px;color:rgba(236,232,226,.55)}
+.cust input{width:52px;font:inherit;font-size:14px;color:var(--ink);text-align:center;background:rgba(236,232,226,.04);border:1px solid rgba(236,232,226,.16);border-radius:2px;padding:6px 2px}
+.cust input::-webkit-outer-spin-button,.cust input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.ops{display:flex;gap:10px}
+.ops button{font-size:13.5px;letter-spacing:.1em;padding:11px 30px;border-radius:2px;border:1px solid rgba(236,232,226,.3);background:rgba(236,232,226,.03);color:rgba(236,232,226,.75);cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.ops button:hover{color:var(--ink);border-color:rgba(236,232,226,.55);background:rgba(236,232,226,.07)}
+.ops button.pri{background:var(--ink);border-color:var(--ink);color:#17130f;font-weight:650}
+.ops button.pri:hover{background:#fbf8f3;border-color:#fbf8f3}
+.about{position:relative;z-index:2;border-top:1px solid var(--hair);padding:64px 20px 90px;background:linear-gradient(180deg,rgba(255,243,224,.014),transparent 30%)}
+.wrap{max-width:660px;margin:0 auto;text-align:left}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:60px}
+.lead{font-size:16px;line-height:1.95;color:rgba(236,232,226,.74)}
+.lead em{font-style:normal;color:var(--ink)}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+:root{--ch:min(22vh,16.5vw)}
+main{padding:74px 16px 50px}
+.ops button{padding:10px 22px;font-size:12.5px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.ops button{transition:none}.chips button{transition:none}.back{transition:none}.ftr a{transition:none}.row p a,.qa p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"翻页倒计时","alternateName":"Flip 一刻","url":"https://flipclock.sts.jx.cn/countdown.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","inLanguage":"zh-CN","description":"浏览器里的免费在线翻页倒计时：1 到 45 分钟一键预设，自定义时分秒，归零哔声提醒，可全屏挂在会议室或教室大屏，无需下载，打开即用。","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"author":{"@type":"Organization","name":"sts.jx.cn","url":"https://sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://flipclock.sts.jx.cn/"},{"@type":"ListItem","position":2,"name":"翻页倒计时","item":"https://flipclock.sts.jx.cn/countdown.html"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"最长能倒多久？","acceptedAnswer":{"@type":"Answer","text":"自定义最多 23 小时 59 分 59 秒；常用场景用分钟预设一键开始，最长 45 分钟。"}},{"@type":"Question","name":"归零后会怎样？","acceptedAnswer":{"@type":"Answer","text":"哔三声提醒然后停在 00:00:00，不会自动重来。需要循环计时的，用番茄钟页，它会在专注和休息之间自动轮转。"}},{"@type":"Question","name":"切到别的标签页还准吗？","acceptedAnswer":{"@type":"Answer","text":"准。计时基于你设备的系统时钟计算，不依赖页面是否在前台；回到页面时会立即校正显示。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<main>
+<div class="clockrow" id="face" role="timer" aria-label="翻页倒计时">
+<div class="card">
+<span class="seam" aria-hidden="true"></span>
+<div class="dg" id="dH1" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+<div class="dg" id="dH2" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+</div>
+<div class="card">
+<span class="seam" aria-hidden="true"></span>
+<div class="dg" id="dM1" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+<div class="dg" id="dM2" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+</div>
+<div class="card">
+<span class="seam" aria-hidden="true"></span>
+<div class="dg" id="dS1" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+<div class="dg" id="dS2" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+</div>
+</div>
+<div class="ctl">
+<div class="chips" id="chips">
+<button type="button" data-s="60">1 分</button>
+<button type="button" data-s="180">3 分</button>
+<button type="button" data-s="300">5 分</button>
+<button type="button" data-s="600">10 分</button>
+<button type="button" data-s="1500">25 分</button>
+<button type="button" data-s="2700">45 分</button>
+</div>
+<div class="cust">
+<label>时 <input id="cdH" type="number" min="0" max="23" value="0"></label>
+<label>分 <input id="cdM" type="number" min="0" max="59" value="0"></label>
+<label>秒 <input id="cdS" type="number" min="0" max="59" value="0"></label>
+</div>
+<div class="ops">
+<button type="button" class="pri" id="go">开始</button>
+<button type="button" id="rst">重置</button>
+</div>
+</div>
+</main>
+<button class="fsbtn" id="fsbtn" type="button" aria-label="进入全屏">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path class="ic-exp" d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/><path class="ic-cmp" d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/></svg>
+</button>
+<section class="about">
+<div class="wrap" style="counter-reset:q">
+<h1 class="lab">翻页倒计时</h1>
+<p class="lead">一块会翻页的<em>倒计时</em>。分钟预设一键开始，时分秒也能自定义，最后十秒的翻页一页比一页沉；归零哔三声，干脆收场。时间全部在本地计算，断网照跑。</p>
+<div class="sec">
+<h2 class="lab">怎么用</h2>
+<div class="row"><h3>分钟预设</h3><p>点 1 到 45 分任意一档，表盘直接跳到该时长，再点「开始」就走表。会议中场、课间休息用得最多的是 5 分和 10 分。</p></div>
+<div class="row"><h3>自定义时长</h3><p>时、分、秒三格随便填，改完即生效；配合「开始」倒任意长度，最长 23 小时 59 分 59 秒。</p></div>
+<div class="row"><h3>暂停与重置</h3><p>「开始」和「暂停」是同一个键；「重置」回到设定时长。归零后哔三声停在 00:00:00，不会自动重来。</p></div>
+</div>
+<div class="sec">
+<h2 class="lab">适合谁</h2>
+<div class="row"><h3>会议与讨论</h3><p>每人发言五分钟、茶歇十分钟，全屏挂在会议室大屏上，翻页声比主持人看表优雅得多。</p></div>
+<div class="row"><h3>厨房与茶歇</h3><p>泡面三分钟、煮蛋八分钟，手机往桌上一放，看见翻到 00 就去关火，不用记时间。</p></div>
+<div class="row"><h3>考试与测验</h3><p>随堂测验 15 分钟、模考 120 分钟，教室投影挂一块，学生抬头即见剩余时间，比口头报时公平。</p></div>
+<div class="row"><h3>活动开场</h3><p>发布会、年会、直播抽奖前的十分钟倒计时，翻页的样子自带仪式感，比电子数字更适合大场面。</p></div>
+</div>
+<div class="sec">
+<h2 class="lab">常见问题</h2>
+<div class="qa"><h3>最长能倒多久？</h3><p>自定义最多 23 小时 59 分 59 秒；常用场景用分钟预设一键开始，最长 45 分钟。</p></div>
+<div class="qa"><h3>归零后会怎样？</h3><p>哔三声提醒然后停在 00:00:00，不会自动重来。需要循环计时的，用<a href="pomodoro.html">番茄钟</a>，它会在专注和休息之间自动轮转。</p></div>
+<div class="qa"><h3>切到别的标签页还准吗？</h3><p>准。计时基于你设备的系统时钟计算，不依赖页面是否在前台；回到页面时会立即校正显示。</p></div>
+</div>
+</div>
+</section>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">翻页时钟</a><a href="stopwatch.html">秒表</a><a href="pomodoro.html">番茄钟</a><a href="guide.html">指南</a></nav></footer>
+<script>
+(function(){
+var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var face=document.getElementById('face');
+var goBtn=document.getElementById('go');
+var rstBtn=document.getElementById('rst');
+var cdH=document.getElementById('cdH');
+var cdM=document.getElementById('cdM');
+var cdS=document.getElementById('cdS');
+var units=['dH1','dH2','dM1','dM2','dS1','dS2'].map(function(i){return document.getElementById(i);});
+function pad(n){return (n<10?'0':'')+n;}
+function put(el,v){el.style.setProperty('--d','"'+v+'"');}
+function halves(u){return u.querySelectorAll('.h-t,.h-b');}
+function flipOnce(u,shown,target,fast){
+var st=halves(u);var ff=u.querySelector('.f-f');var fb=u.querySelector('.f-b');
+put(st[0],target);put(st[1],shown);put(ff,shown);put(fb,target);
+ff.classList.remove('run');fb.classList.remove('run');
+if(fast)u.classList.add('fast');else u.classList.remove('fast');
+void u.offsetWidth;ff.classList.add('run');fb.classList.add('run');
+var card=u.closest('.card');
+if(card&&fast===false&&u._casc){card.classList.add('snap');setTimeout(function(){card.classList.remove('snap');},140);}
+}
+function setDigit(u,v,anim){
+if(u._busy){u._want=v;return;}
+var cur=u.getAttribute('data-v');if(cur===v)return;
+u.setAttribute('data-v',v);
+var st=halves(u);var ff=u.querySelector('.f-f');var fb=u.querySelector('.f-b');
+if(!anim||reduced||!cur){put(st[0],v);put(st[1],v);put(ff,v);put(fb,v);return;}
+var num=parseInt(cur,10);var nv=parseInt(v,10);
+var d=(nv-num+10)%10;var steps=[];
+if(d>1&&d<=3){for(var i=1;i<=d;i++)steps.push(String((num+i)%10));}
+if(steps[steps.length-1]!==v||!steps.length)steps.push(v);
+u._casc=steps.length>1;
+u._busy=true;var shown=cur;var i=0;
+function next(){
+var target=steps[i];var last=i===steps.length-1;
+flipOnce(u,shown,target,!last);shown=target;i++;
+if(i<steps.length){u._t=setTimeout(next,128);}
+else{u._t=setTimeout(function(){u._busy=false;put(st[1],v);var w=u._want;u._want=undefined;if(w&&w!==u.getAttribute('data-v'))setDigit(u,w,true);},last?400:160);}
+}
+next();
+}
+function render(h,m,s,anim){
+var a=[pad(h),pad(m),pad(s)];var k=0;
+for(var g=0;g<3;g++){for(var d2=0;d2<2;d2++){setDigit(units[k],a[g].charAt(d2),anim);k++;}}
+face.setAttribute('aria-label','剩余 '+a[0]+':'+a[1]+':'+a[2]);
+}
+function parts(sec){return [Math.floor(sec/3600),Math.floor(sec/60)%60,sec%60];}
+var running=false,total=0,left=0,end=0,timer=null;
+function arm(){
+clearTimeout(timer);
+if(!running)return;
+var r=(end-Date.now())%1000;
+var d=(r<0?r+1000:r)+40;
+if(d>0&&d<=1100)timer=setTimeout(tick,d);
+}
+function tick(){
+if(running){
+var r=Math.max(0,Math.ceil((end-Date.now())/1000));
+if(r<left)left=r;
+}
+var c=parts(left);
+render(c[0],c[1],c[2],true);
+if(running&&left===0){running=false;goBtn.textContent='开始';beep();}
+arm();
+}
+function readCustom(){
+var v=function(el){var n=+el.value;return isFinite(n)&&n>0?Math.floor(n):0;};
+return Math.min(v(cdH),23)*3600+Math.min(v(cdM),59)*60+Math.min(v(cdS),59);
+}
+function applyCd(sec,btn){
+running=false;clearTimeout(timer);
+total=sec;left=sec;
+var chips=document.querySelectorAll('#chips button');
+for(var i=0;i<chips.length;i++)chips[i].classList.toggle('on',chips[i]===btn);
+var f=parts(sec);render(f[0],f[1],f[2],false);
+goBtn.textContent='开始';
+}
+var chips=document.querySelectorAll('#chips button');
+for(var i=0;i<chips.length;i++){
+chips[i].addEventListener('click',function(){applyCd(+this.getAttribute('data-s'),this);});
+}
+[cdH,cdM,cdS].forEach(function(el){
+el.addEventListener('change',function(){applyCd(readCustom(),null);});
+});
+goBtn.addEventListener('click',function(){
+if(running){left=Math.max(0,Math.ceil((end-Date.now())/1000));running=false;goBtn.textContent='继续';}
+else{
+if(total===0){var sec=readCustom();if(sec===0)return;applyCd(sec,null);}
+if(left===0)left=total;
+end=Date.now()+left*1000;
+running=true;goBtn.textContent='暂停';tick();
+}
+});
+rstBtn.addEventListener('click',function(){running=false;clearTimeout(timer);left=total;goBtn.textContent='开始';tick2();});
+function tick2(){var c=parts(left);render(c[0],c[1],c[2],false);}
+document.addEventListener('keydown',function(e){
+if(e.code!=='Space')return;
+var ae=document.activeElement;
+if(ae&&(ae.tagName==='BUTTON'||ae.tagName==='INPUT'))return;
+e.preventDefault();goBtn.click();
+});
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&running)tick();});
+var actx=null;
+function beep(){
+try{
+actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+if(actx.state==='suspended')actx.resume();
+var t0=actx.currentTime;
+for(var i=0;i<3;i++){
+var o=actx.createOscillator();
+var g=actx.createGain();
+o.type='sine';
+o.frequency.value=880;
+var ts=t0+i*0.22;
+g.gain.setValueAtTime(0,ts);
+g.gain.linearRampToValueAtTime(0.3,ts+0.02);
+g.gain.exponentialRampToValueAtTime(0.001,ts+0.18);
+o.connect(g);
+g.connect(actx.destination);
+o.start(ts);
+o.stop(ts+0.2);
+}
+}catch(err){}
+}
+var fsbtn=document.getElementById('fsbtn');
+fsbtn.addEventListener('click',function(){
+if(document.fullscreenElement){document.exitFullscreen();}
+else{document.documentElement.requestFullscreen().catch(function(){});}
+});
+document.addEventListener('fullscreenchange',function(){
+var on=!!document.fullscreenElement;
+fsbtn.classList.toggle('on',on);
+fsbtn.setAttribute('aria-label',on?'退出全屏':'进入全屏');
+});
+render(0,0,0,false);
+})();
+</script>
+</body>
+</html>

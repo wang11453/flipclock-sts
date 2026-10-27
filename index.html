@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>翻页时钟 - 免费在线全屏翻页时钟，无需下载 | Flip 一刻</title>
+<meta name="description" content="Flip 一刻，浏览器里的免费在线翻页时钟：机械翻页动效，落板有重量，走时不出网，内置秒表与倒计时。专注、学习、办公都能用，无需下载，打开即用。">
+<meta name="bytedance-verification-code" content="LopofEU1ywZ0kMmy442a">
+<meta name="msvalidate.01" content="527B85D93E47ACEB4D896EE2B4FB25DE">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="翻页时钟 - 免费在线全屏翻页时钟，无需下载 | Flip 一刻">
+<meta property="og:description" content="Flip 一刻，浏览器里的免费在线翻页时钟：机械翻页动效，落板有重量，走时不出网，内置秒表与倒计时。专注、学习、办公都能用，无需下载，打开即用。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/">
+<meta property="og:image" content="https://flipclock.sts.jx.cn/og-index.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="翻页时钟 - 免费在线全屏翻页时钟，无需下载 | Flip 一刻">
+<meta name="twitter:description" content="Flip 一刻，浏览器里的免费在线翻页时钟：机械翻页动效，落板有重量，走时不出网，内置秒表与倒计时。专注、学习、办公都能用，无需下载，打开即用。">
+<meta name="twitter:image" content="https://flipclock.sts.jx.cn/og-index.png">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--dim:rgba(236,232,226,.55);
+--faint:rgba(236,232,226,.36);
+--hair:rgba(236,232,226,.08);
+--ch:min(26vh,17vw);
+--cw:calc(var(--ch)*.72);
+--gap:calc(var(--ch)*.07);
+--rad:calc(var(--ch)*.042);
+--dfs:calc(var(--ch)*.92);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible,button:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.hdr{position:fixed;top:0;left:0;right:0;z-index:20;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,46px);border-bottom:1px solid var(--hair)}
+.wm{font-size:12.5px;font-weight:700;letter-spacing:.32em;color:rgba(236,232,226,.82)}
+.hdr a{font-size:13px;color:rgba(236,232,226,.55);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.hdr a:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+main{position:relative;z-index:2;flex:1;min-height:calc(100svh - 58px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:96px 20px 92px}
+.clockrow{position:relative;display:flex;gap:var(--gap)}
+.clockrow::after{content:"";position:absolute;left:4%;right:4%;bottom:calc(var(--ch)*-.18);height:calc(var(--ch)*.15);background:radial-gradient(50% 100% at 50% 50%,rgba(0,0,0,.68),transparent 72%);filter:blur(10px);z-index:-1}
+.card{position:relative;display:flex;width:calc(var(--cw)*2);height:var(--ch);border-radius:var(--rad);overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.5),0 calc(var(--ch)*.2) calc(var(--ch)*.42) rgba(0,0,0,.55),inset 0 1px 0 rgba(255,246,230,.06),inset 0 -1px 0 rgba(0,0,0,.55)}
+.card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#2e2b28 0%,#201d1b 38%,#0c0b0a 49.5%,#0c0b0a 50.5%,#1b1815 56%,#100e0c 100%)}
+.card::after{content:"";position:absolute;left:0;right:0;top:calc(50% - 3.2%);height:6.4%;background:linear-gradient(180deg,rgba(0,0,0,.3),rgba(0,0,0,.7) 48%,rgba(0,0,0,.7) 52%,rgba(0,0,0,.28));z-index:1;pointer-events:none}
+.seam{position:absolute;left:0;right:0;top:calc(50% - 2px);height:4px;background:#040403;z-index:6}
+.seam::after{content:"";position:absolute;left:0;right:0;top:calc(50% - 1px);height:1px;background:rgba(236,232,226,.3);box-shadow:0 0 7px rgba(236,232,226,.16)}
+.dg{position:relative;width:50%;height:100%;perspective:calc(var(--ch)*1.6)}
+.dg span{position:absolute;left:0;width:100%;height:50%;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.dg span::after{content:var(--d,"0");position:absolute;left:0;width:100%;height:200%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:var(--dfs);font-weight:400;letter-spacing:0;line-height:1;font-variant-numeric:tabular-nums;color:transparent;background:linear-gradient(180deg,#faf7f1 0%,#e6e1d8 55%,#c8c2b7 100%);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5));transform:scaleX(.92) translateY(-.015em)}
+.h-t{top:0;z-index:2}
+.h-b{top:50%;z-index:2}
+.h-t::after{top:0}
+.h-b::after{top:-100%}
+.f-f{top:0;z-index:4;transform-origin:50% 100%;background:linear-gradient(180deg,#2c2a27,#211f1d);display:none;will-change:transform}
+.f-b{top:50%;z-index:3;transform-origin:50% 0%;background:linear-gradient(180deg,#131110,#0d0c0b);display:none;will-change:transform}
+.f-f::after{top:0}
+.f-b::after{top:-100%}
+.f-f::before,.f-b::before{content:"";position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+.f-f.run{display:flex;animation:fdown .3s cubic-bezier(.4,.08,.55,.98) forwards}
+.f-b.run{display:flex;animation:fup .3s cubic-bezier(.4,.08,.55,.98) both}
+.f-f.run::before{animation:fshade .3s cubic-bezier(.4,0,.55,1) forwards}
+.f-b.run::before{animation:fshade2 .3s cubic-bezier(.4,0,.55,1) forwards}
+@keyframes fdown{from{transform:rotateX(0)}to{transform:rotateX(-180deg)}}
+@keyframes fup{from{transform:rotateX(180deg)}to{transform:rotateX(0)}}
+@keyframes fshade{from{opacity:0}to{opacity:.34}}
+@keyframes fshade2{from{opacity:.34}to{opacity:0}}
+.dg.fast .f-f.run{animation-duration:.12s}
+.dg.fast .f-b.run{animation-duration:.12s}
+.dg.fast .f-f.run::before{animation-duration:.12s}
+.dg.fast .f-b.run::before{animation-duration:.12s}
+.card.snap .seam::after{box-shadow:0 0 10px rgba(250,247,241,.5)}
+@media (prefers-reduced-motion: reduce){.f-f,.f-b{display:none!important}}
+.plaque{margin-top:calc(var(--ch)*.3)}
+h1 .cn{display:block;font-size:clamp(38px,6vw,64px);font-weight:900;letter-spacing:.05em;line-height:1.12}
+h1 .en{display:block;margin-top:14px;font-size:12px;font-weight:600;letter-spacing:.5em;text-indent:.5em;color:rgba(236,232,226,.48)}
+.sub{margin-top:26px;font-size:15.5px;line-height:1.8;color:rgba(236,232,226,.6)}
+.cta{margin-top:48px;display:inline-flex;align-items:center;padding:16px 48px;border:1px solid var(--ink);border-radius:2px;background:var(--ink);color:#17130f;font-weight:650;font-size:15px;letter-spacing:.14em;text-indent:.14em;text-decoration:none;transition:background .22s,border-color .22s}
+.cta:hover{background:#fbf8f3;border-color:#fbf8f3}
+.ftr{position:relative;left:auto;right:auto;bottom:auto;z-index:20;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(20px,4vw,46px);border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.about{position:relative;z-index:2;border-top:1px solid var(--hair);padding:78px 20px 110px;background:linear-gradient(180deg,rgba(255,243,224,.014),transparent 30%)}
+.wrap{max-width:660px;margin:0 auto;text-align:left}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:72px}
+.lead{font-size:16px;line-height:1.95;color:rgba(236,232,226,.74);margin-bottom:18px}
+.lead em{font-style:normal;color:var(--ink)}
+.qa{counter-increment:q;padding:24px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.row{padding:24px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.more{margin-top:44px;text-align:left}
+.more a{display:inline-flex;align-items:center;gap:12px;font-size:14px;font-weight:650;letter-spacing:.12em;color:var(--ink);text-decoration:none;padding-bottom:4px;border-bottom:1px solid rgba(236,232,226,.45);transition:border-color .25s}
+.more a:hover{border-bottom-color:var(--ink)}
+.more svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.6}
+.ftr span{color:rgba(236,232,226,.55)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+:root{--ch:min(22vh,16.5vw)}
+main{padding:84px 16px 80px}
+.sub{font-size:14px;max-width:26em}
+.cta{width:min(320px,100%);justify-content:center;padding:14px 0}
+.ftr{justify-content:center}
+.about{padding:60px 16px 90px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.cta{transition:none}.hdr a{transition:none}.qa p a{transition:none}.more a{transition:none}.ftr a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"翻页时钟","alternateName":"Flip 一刻","url":"https://flipclock.sts.jx.cn/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","inLanguage":"zh-CN","description":"Flip 一刻，浏览器里的免费在线翻页时钟：机械翻页动效，落板有重量，走时不出网，内置秒表与倒计时。专注、学习、办公都能用，无需下载，打开即用。","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"author":{"@type":"Organization","name":"sts.jx.cn","url":"https://sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"免费吗？要下载安装吗？","acceptedAnswer":{"@type":"Answer","text":"完全免费，没有广告，也没有下载安装这一步。浏览器打开就能用，关掉即走，不留任何东西在电脑上。"}},{"@type":"Question","name":"怎么进入全屏？","acceptedAnswer":{"@type":"Answer","text":"打开全屏翻页时钟后，点左下角的全屏按钮即可铺满整块屏幕，手机浏览器同样支持。空格键可以随时启停秒表与倒计时。"}},{"@type":"Question","name":"翻页有声音吗？","acceptedAnswer":{"@type":"Answer","text":"有。全屏时钟里可以打开翻页机械声，是 WebAudio 现场合成的「嗒」声，不是录好的音频文件；默认关闭，想要再点开，数字连翻时会自动静音，不会吵。"}},{"@type":"Question","name":"长时间挂着会自动息屏吗？","acceptedAnswer":{"@type":"Answer","text":"不会。进入全屏后会自动申请「保持唤醒」，屏幕不会中途熄灭，退出全屏即释放。个别老旧浏览器不支持时，沿用系统自己的息屏设置。"}},{"@type":"Question","name":"断网了还能用吗？","acceptedAnswer":{"@type":"Answer","text":"能。走时、秒表、倒计时全部在你的设备本地运行，断网不影响任何功能，也不依赖账号。刷新页面需要网络，但挂着的钟会一直走。"}},{"@type":"Question","name":"支持哪些设备？","acceptedAnswer":{"@type":"Answer","text":"桌面与手机浏览器均可，显示时会自动适配屏幕大小。时钟支持 24 小时与 12 小时制切换，秒表计次、倒计时预设全部内置。"}},{"@type":"Question","name":"和 Fliqlo 屏保有什么区别？","acceptedAnswer":{"@type":"Answer","text":"Fliqlo 是要安装的屏保软件，公司或学校电脑常常没权限装；我们是网页，浏览器打开就是，还带秒表、倒计时和番茄钟三件工具。逐项对比见使用指南。"}},{"@type":"Question","name":"直播间 OBS 能挂吗？","acceptedAnswer":{"@type":"Answer","text":"能。OBS 里加一个浏览器源指向页面即可，钟会实时走时，画面里就是一块复古翻页钟。具体步骤见使用指南。"}}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","name":"Flip 一刻","alternateName":"翻页时钟","url":"https://flipclock.sts.jx.cn/","inLanguage":"zh-CN"}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<header class="hdr">
+<span class="wm">FLIP 一刻</span>
+<a href="https://sts.jx.cn">主站</a>
+</header>
+<main>
+<div class="clockrow" id="face" role="timer" aria-label="翻页时钟">
+<div class="card">
+<span class="seam" aria-hidden="true"></span>
+<div class="dg" id="dH1" data-v="" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+<div class="dg" id="dH2" data-v="" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+</div>
+<div class="card">
+<span class="seam" aria-hidden="true"></span>
+<div class="dg" id="dM1" data-v="" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+<div class="dg" id="dM2" data-v="" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+</div>
+<div class="card">
+<span class="seam" aria-hidden="true"></span>
+<div class="dg" id="dS1" data-v="" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+<div class="dg" id="dS2" data-v="" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+</div>
+</div>
+<div class="plaque">
+<h1><span class="cn">翻页时钟</span><span class="en">FLIP 一刻</span></h1>
+<p class="sub">浏览器里的一台机械翻页钟，落板有重量，走时不出网。</p>
+<a class="cta" href="clock.html">打开全屏时钟</a>
+</div>
+</main>
+<section class="about">
+<div class="wrap" style="counter-reset:q">
+<h2 class="lab">关于</h2>
+<p class="lead">一台活在浏览器里的<em>翻页时钟</em>。不用装 App，不用注册账号，打开页面就是一整面机械翻页钟：每一秒都有真实的落板重量，走时全部在本地完成，不向服务器上报任何数据。时钟之外还有<a href="stopwatch.html">翻页秒表</a>、<a href="countdown.html">倒计时</a>和<a href="pomodoro.html">番茄钟</a>，各有独立页面，工具归工具，互不打扰。</p>
+<div class="sec">
+<h2 class="lab">适用场景</h2>
+<div class="row"><h3>办公大屏</h3><p>会议室投屏或闲置显示器全屏挂一块翻页钟，翻页的动静让「时间在走」看得见，整点跳变一眼可辨。开场前扫一眼，就知道还剩几分钟，不用凑近看清数字。</p></div>
+<div class="row"><h3>教室课堂</h3><p>上课、自习、随堂测验挂一块翻页钟，后排学生抬头即见时间。配<a href="countdown.html">倒计时</a>做考试收卷提醒，翻页的提示比铃声温和得多，也不会打断讲话的人。</p></div>
+<div class="row"><h3>直播间</h3><p>OBS 加一个浏览器源，就能把翻页钟挂进直播画面，复古的样子比电子表更适合聊天气氛。走时全在本地完成，推流卡顿它也照走不误，挂钟见<a href="guide.html">使用指南</a>。</p></div>
+<div class="row"><h3>卧室床头</h3><p>平板或旧手机打开网页全屏横放，就是一台不用买硬件的床头钟。暗色底夜间不刺眼，翻页声默认关闭，睡觉得再开；担心息屏就保持全屏，屏幕会一直亮着。</p></div>
+</div>
+<div class="sec">
+<h2 class="lab">常见问题</h2>
+<div class="qa"><h3>免费吗？要下载安装吗？</h3><p>完全免费，没有广告，也没有下载安装这一步。浏览器打开就能用，关掉即走，不留任何东西在电脑上。</p></div>
+<div class="qa"><h3>怎么进入全屏？</h3><p>打开<a href="clock.html">全屏翻页时钟</a>后，点左下角的全屏按钮即可铺满整块屏幕，手机浏览器同样支持。空格键可以随时启停秒表与倒计时。</p></div>
+<div class="qa"><h3>翻页有声音吗？</h3><p>有。全屏时钟里可以打开翻页机械声，是 WebAudio 现场合成的「嗒」声，不是录好的音频文件；默认关闭，想要再点开，数字连翻时会自动静音，不会吵。</p></div>
+<div class="qa"><h3>长时间挂着会自动息屏吗？</h3><p>不会。进入全屏后会自动申请「保持唤醒」，屏幕不会中途熄灭，退出全屏即释放。个别老旧浏览器不支持时，沿用系统自己的息屏设置。</p></div>
+<div class="qa"><h3>断网了还能用吗？</h3><p>能。走时、秒表、倒计时全部在你的设备本地运行，断网不影响任何功能，也不依赖账号。刷新页面需要网络，但挂着的钟会一直走。</p></div>
+<div class="qa"><h3>支持哪些设备？</h3><p>桌面与手机浏览器均可，显示时会自动适配屏幕大小。时钟支持 24 小时与 12 小时制切换，秒表计次、倒计时预设全部内置。</p></div>
+<div class="qa"><h3>和 Fliqlo 屏保有什么区别？</h3><p>Fliqlo 是要安装的屏保软件，公司或学校电脑常常没权限装；我们是网页，浏览器打开就是，还带秒表、倒计时和番茄钟三件工具。逐项对比见<a href="guide.html">使用指南</a>。</p></div>
+<div class="qa"><h3>直播间 OBS 能挂吗？</h3><p>能。OBS 里加一个浏览器源指向页面即可，钟会实时走时，画面里就是一块复古翻页钟。具体步骤见<a href="guide.html">使用指南</a>。</p></div>
+</div>
+<p class="more"><a href="clock.html">打开全屏翻页时钟<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 3.5 13.5 8 9 12.5"/></svg></a></p>
+</div>
+</section>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="clock.html">全屏时钟</a><a href="stopwatch.html">秒表</a><a href="countdown.html">倒计时</a><a href="pomodoro.html">番茄钟</a><a href="guide.html">指南</a></nav></footer>
+<script>
+(function(){
+var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var units=['dH1','dH2','dM1','dM2','dS1','dS2'].map(function(i){return document.getElementById(i);});
+function pad(n){return (n<10?'0':'')+n;}
+function put(el,v){el.style.setProperty('--d','"'+v+'"');}
+function halves(u){return u.querySelectorAll('.h-t,.h-b');}
+function flipOnce(u,shown,target,fast){
+var st=halves(u);var ff=u.querySelector('.f-f');var fb=u.querySelector('.f-b');
+put(st[0],target);put(st[1],shown);put(ff,shown);put(fb,target);
+ff.classList.remove('run');fb.classList.remove('run');
+if(fast)u.classList.add('fast');else u.classList.remove('fast');
+void u.offsetWidth;ff.classList.add('run');fb.classList.add('run');
+var card=u.closest('.card');
+if(card&&fast===false&&u._casc){card.classList.add('snap');setTimeout(function(){card.classList.remove('snap');},140);}
+}
+function setDigit(u,v,anim){
+if(u._busy){u._want=v;return;}
+var cur=u.getAttribute('data-v');if(cur===v)return;
+u.setAttribute('data-v',v);
+var st=halves(u);var ff=u.querySelector('.f-f');var fb=u.querySelector('.f-b');
+if(!anim||reduced||!cur){put(st[0],v);put(st[1],v);put(ff,v);put(fb,v);return;}
+var num=parseInt(cur,10);var nv=parseInt(v,10);
+var d=(nv-num+10)%10;var steps=[];
+if(d>1&&d<=3){for(var i=1;i<=d;i++)steps.push(String((num+i)%10));}
+if(steps[steps.length-1]!==v||!steps.length)steps.push(v);
+u._casc=steps.length>1;
+u._busy=true;var shown=cur;var i=0;
+function next(){
+var target=steps[i];var last=i===steps.length-1;
+flipOnce(u,shown,target,!last);shown=target;i++;
+if(i<steps.length){u._t=setTimeout(next,128);}
+else{u._t=setTimeout(function(){u._busy=false;put(st[1],v);var w=u._want;u._want=undefined;if(w&&w!==u.getAttribute('data-v'))setDigit(u,w,true);},last?400:160);}
+}
+next();
+}
+function render(h,m,s,anim){
+var a=[pad(h),pad(m),pad(s)];var k=0;
+for(var g=0;g<3;g++){for(var d2=0;d2<2;d2++){setDigit(units[k],a[g].charAt(d2),anim);k++;}}
+}
+var timer=null;
+function arm(){timer=setTimeout(tick,1000-(Date.now()%1000)+40);}
+function tick(){
+var dt=new Date();
+render(dt.getHours(),dt.getMinutes(),dt.getSeconds(),true);
+arm();
+}
+document.addEventListener('visibilitychange',function(){if(!document.hidden){clearTimeout(timer);tick();}});
+tick();
+})();
+</script>
+</body>
+</html>

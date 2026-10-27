@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>翻页时钟使用指南 - 全屏、快捷键、OBS 挂钟、uTools 与对比 | Flip 一刻</title>
+<meta name="description" content="翻页时钟怎么用：全屏开启、空格快捷键、秒表计次、倒计时预设、OBS 直播间挂钟教程、uTools 插件计划，以及网页版、Fliqlo 屏保与手机 App 的逐项对比。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/guide.html">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="翻页时钟使用指南 - 全屏、快捷键、OBS 挂钟、uTools 与对比 | Flip 一刻">
+<meta property="og:description" content="翻页时钟怎么用：全屏开启、空格快捷键、秒表计次、倒计时预设、OBS 直播间挂钟教程、uTools 插件计划，以及网页版、Fliqlo 屏保与手机 App 的逐项对比。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/guide.html">
+<meta property="og:image" content="https://flipclock.sts.jx.cn/og-guide.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="翻页时钟使用指南 - 全屏、快捷键、OBS 挂钟、uTools 与对比 | Flip 一刻">
+<meta name="twitter:description" content="翻页时钟怎么用：全屏开启、空格快捷键、秒表计次、倒计时预设、OBS 直播间挂钟教程、uTools 插件计划，以及网页版、Fliqlo 屏保与手机 App 的逐项对比。">
+<meta name="twitter:image" content="https://flipclock.sts.jx.cn/og-guide.png">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+.hero{position:relative;z-index:2;padding:120px 20px 30px;max-width:660px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(30px,4.6vw,44px);font-weight:900;letter-spacing:.05em;line-height:1.2}
+.hero .sub{margin-top:18px;font-size:15.5px;line-height:1.85;color:rgba(236,232,226,.6)}
+.wrap{position:relative;z-index:2;max-width:660px;margin:0 auto;width:100%;padding:0 20px 100px}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:72px}
+.sec:first-of-type{margin-top:36px}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a,td a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover,td a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+kbd{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12.5px;padding:2px 7px;border-radius:2px;border:1px solid rgba(236,232,226,.25);background:rgba(236,232,226,.05);color:rgba(236,232,226,.8)}
+.step{counter-increment:s;position:relative;padding:20px 0 20px 56px;border-bottom:1px solid var(--hair)}
+.step:first-of-type{border-top:1px solid var(--hair)}
+.step::before{content:counter(s,decimal-leading-zero);position:absolute;left:0;top:18px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.step h3{font-size:15px;font-weight:650;color:var(--ink)}
+.step p{margin:8px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.step code{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12.5px;color:rgba(236,232,226,.8)}
+.cmp{width:100%;border-collapse:collapse;margin-top:6px;font-size:13.5px}
+.cmp th,.cmp td{padding:12px 10px;border-bottom:1px solid var(--hair);text-align:left;line-height:1.6;vertical-align:top}
+.cmp thead th{font-size:12px;font-weight:700;letter-spacing:.08em;color:rgba(236,232,226,.5)}
+.cmp td:first-child{color:rgba(236,232,226,.5);white-space:nowrap}
+.cmp td{color:rgba(236,232,226,.72)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+.hero{padding-top:96px}
+.cmp{font-size:12.5px}
+.cmp th,.cmp td{padding:10px 6px}
+.cmp td:first-child{white-space:normal}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.step{padding-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.back{transition:none}.ftr a{transition:none}.row p a,.qa p a,td a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"翻页时钟使用指南","url":"https://flipclock.sts.jx.cn/guide.html","inLanguage":"zh-CN","description":"翻页时钟怎么用：全屏开启、空格快捷键、秒表计次、倒计时预设、OBS 直播间挂钟教程、uTools 插件计划，以及网页版、Fliqlo 屏保与手机 App 的逐项对比。","isPartOf":{"@type":"WebSite","name":"翻页时钟","url":"https://flipclock.sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://flipclock.sts.jx.cn/"},{"@type":"ListItem","position":2,"name":"使用指南","item":"https://flipclock.sts.jx.cn/guide.html"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"时钟准吗？时间从哪来？","acceptedAnswer":{"@type":"Answer","text":"读你设备自己的系统时间，每秒与系统时钟对齐，不联网校时。手机和电脑一般都会自动同步运营商或网络时间，所以通常是准的；设备时间不准它就不准。"}},{"@type":"Question","name":"能把秒藏掉吗？","acceptedAnswer":{"@type":"Answer","text":"不能，也没有计划。翻页钟的灵魂就在秒针那一页一页地落，藏掉秒等于拔掉灵魂；确实只想要小时分的场合，站一会儿你会发现秒才是最好看的部分。"}},{"@type":"Question","name":"旧平板带得动吗？","acceptedAnswer":{"@type":"Answer","text":"带得动。翻页动画只动 transform，浏览器用 GPU 合成，不重绘整页；近十年的手机和平板都跑得很顺。如果还不放心，翻页声保持关闭即可，那才是最费不了也最省不了的部分。"}},{"@type":"Question","name":"挂一晚上费电吗？","acceptedAnswer":{"@type":"Answer","text":"屏幕常亮必然耗电，挂机建议插着电。全屏时申请的「保持唤醒」只是防止息屏，不会额外增加负担；退出全屏立即恢复系统默认的息屏策略。"}},{"@type":"Question","name":"怎么快速退出？","acceptedAnswer":{"@type":"Answer","text":"按 Esc 或 F11 退出全屏，左上角「返回首页」回落地页，关掉标签页就是彻底收工——什么都不用卸载，因为本来也没装过。"}},{"@type":"Question","name":"为什么是暗色的？","acceptedAnswer":{"@type":"Answer","text":"两层原因：夜间和卧室场景不刺眼；真实的机械翻页钟大多是黑底白字卡片，我们照着物理原物的样子做，暗色才对味。"}},{"@type":"Question","name":"收费吗？会有会员版吗？","acceptedAnswer":{"@type":"Answer","text":"不收费，也没有会员计划。静态页面没有服务器成本压力，翻页声、番茄钟、计次这些能力都会一直是免费的。"}},{"@type":"Question","name":"手机上怎么用最舒服？","acceptedAnswer":{"@type":"Answer","text":"浏览器打开后加到主屏幕，图标点开就是全屏体验；横放当床头钟，竖放当桌面钟。iPhone 用 Safari 的「添加到主屏幕」，安卓各浏览器都有类似入口。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<header class="hero">
+<h1>使用指南</h1>
+<p class="sub">从打开到挂进直播间，一页说清。翻页时钟全家族：<a href="clock.html">全屏时钟</a>、<a href="stopwatch.html">秒表</a>、<a href="countdown.html">倒计时</a>、<a href="pomodoro.html">番茄钟</a>，共用一套操作语言——空格启停，左下全屏，关掉即走。</p>
+</header>
+<main class="wrap">
+<section class="sec" id="fullscreen">
+<h2 class="lab">全屏与快捷键</h2>
+<div class="row"><h3>开全屏</h3><p>打开<a href="clock.html">全屏翻页时钟</a>后，点左下角的全屏按钮；按钮点亮的同时屏幕保持唤醒，挂一晚上不会中途熄灭。退出按 <kbd>Esc</kbd> 或再点一次按钮。</p></div>
+<div class="row"><h3>空格键</h3><p>秒表与倒计时模式下，<kbd>空格</kbd> 就是开始/暂停；光标在按钮上时不会误触，放心按。秒表计次还有 <kbd>L</kbd> 键，手不离键盘记成绩。</p></div>
+<div class="row"><h3>12 与 24 小时制</h3><p>时钟模式右下面板里 <kbd>24h</kbd> / <kbd>12h</kbd> 一键切换，12 小时制时右上角亮出 AM / PM 小标。选择只记在当前页面，不打扰任何人。</p></div>
+</section>
+<section class="sec" id="stopwatch">
+<h2 class="lab">秒表与计次</h2>
+<div class="row"><h3>独立的秒表页</h3><p><a href="stopwatch.html">翻页秒表</a>是独立页面，打开就是跑表状态：分秒翻页显示，百分秒以数字读数实时跟随。<kbd>空格</kbd> 启停，<kbd>L</kbd> 计次。</p></div>
+<div class="row"><h3>计次列表</h3><p>每按一次计次，当前时间进列表，精确到 0.01 秒，最多 60 条。体育课分组测跑、实验记录反应时间，列表就是现成成绩单，刷新即清空，不留痕迹。</p></div>
+</section>
+<section class="sec" id="choose">
+<h2 class="lab">倒计时与番茄钟怎么选</h2>
+<div class="row"><h3>一次性的用倒计时</h3><p>会议茶歇、泡面、考试收卷——有明确终点的事情用<a href="countdown.html">倒计时</a>：分钟预设一键开始，归零哔三声就停，干脆利落。</p></div>
+<div class="row"><h3>整段的用番茄钟</h3><p>自习、写代码、备考这种一坐几小时的，用<a href="pomodoro.html">番茄钟</a>：25 分钟专注与 5 分钟休息自动轮转，今日完成轮数自动记录，节奏感是它替你维持的。</p></div>
+</section>
+<section class="sec" id="obs">
+<h2 class="lab">OBS 直播间挂钟</h2>
+<div style="counter-reset:s">
+<div class="step"><h3>添加浏览器源</h3><p>OBS 的「来源」面板点 <kbd>+</kbd>，选「浏览器」，名称随意（比如「翻页钟」）。</p></div>
+<div class="step"><h3>填地址</h3><p>URL 填 <code>https://flipclock.sts.jx.cn/clock.html</code>，宽度高度按画面位置定，角上小钟用 <code>480×270</code> 就很清楚。</p></div>
+<div class="step"><h3>摆位置</h3><p>把源拖到想要的角落。钟会实时走时，翻页动效原样保留，断网也不停——走时在你本地，不依赖推流。</p></div>
+<div class="step"><h3>裁掉控件（可选）</h3><p>右下角控制面板以低透明度常驻，画面里不想拍到它的话：按住 <kbd>Alt</kbd> 拖动源的边缘裁掉右下角即可，钟面本身毫发无伤。</p></div>
+</div>
+</section>
+<section class="sec" id="privacy">
+<h2 class="lab">断网与隐私</h2>
+<div class="row"><h3>全部本地运行</h3><p>走时、秒表、倒计时、番茄钟，所有计时都在你的设备上完成，不向任何服务器发请求、不上报任何数据。页面开着的时候拔掉网线，它照走不误。</p></div>
+<div class="row"><h3>没有账号，没有留存</h3><p>秒表计次、番茄轮数只存在当前浏览器里（番茄轮数换天自动清零），没有账号系统，也就没有「你的数据」可言。</p></div>
+</section>
+<section class="sec" id="compare">
+<h2 class="lab">网页版、Fliqlo 与手机 App</h2>
+<table class="cmp">
+<thead><tr><th>维度</th><th>网页版（本站）</th><th>Fliqlo 屏保</th><th>手机 App</th></tr></thead>
+<tbody>
+<tr><td>安装</td><td>无需，打开即用</td><td>需安装屏保软件</td><td>需下载 App</td></tr>
+<tr><td>公司/学校电脑</td><td>能用，浏览器就行</td><td>常无权限安装</td><td>视管理策略</td></tr>
+<tr><td>广告与内购</td><td>无</td><td>免费版简洁</td><td>多数有广告或会员</td></tr>
+<tr><td>秒表计次</td><td>有，0.01 秒精度</td><td>无</td><td>看具体 App</td></tr>
+<tr><td>倒计时与番茄钟</td><td>有，翻页形态</td><td>无</td><td>看具体 App</td></tr>
+<tr><td>直播间 OBS</td><td>浏览器源直挂</td><td>做不到</td><td>做不到</td></tr>
+<tr><td>断网可用</td><td>可用</td><td>可用</td><td>可用</td></tr>
+<tr><td>数据上报</td><td>零上报</td><td>本地运行</td><td>视开发者</td></tr>
+</tbody>
+</table>
+</section>
+<section class="sec" id="more">
+<h2 class="lab">更多阅读</h2>
+<div class="row"><h3>按场景挑</h3><p>直播间挂钟读 <a href="obs-flip-clock.html">OBS 挂法</a>，会场与会议读 <a href="big-countdown-projector.html">投影大屏倒计时</a>，教室读 <a href="classroom-countdown.html">上课倒计时</a>；设备搭配有 <a href="flip-clock-tablet.html">平板安置</a> 与 <a href="keep-screen-awake.html">屏幕常亮</a>；功能细节有 <a href="fullscreen-flip-clock.html">全屏说明</a>、<a href="flip-clock-sound.html">翻页声</a>、<a href="time-format-12-24.html">12/24 小时制</a>；选型纠结读 <a href="flip-clock-vs-fliqlo.html">和 Fliqlo 的对比</a>，在意隐私读 <a href="no-login-flip-clock.html">免登录</a> 与 <a href="offline-flip-clock.html">离线能力</a>；专注节奏见 <a href="pomodoro-25.html">25 分钟番茄钟</a>。</p></div>
+</section>
+<section class="sec" id="utools">
+<h2 class="lab">uTools 插件（预备中）</h2>
+<div class="row"><h3>我们在准备什么</h3><p>一个 uTools 插件版翻页时钟：全局呼出即达，不开浏览器也能用同一套翻页引擎，时钟、秒表、倒计时、番茄钟全部随行。目前在打磨阶段，不做承诺日期，上线后本页第一时间更新。</p></div>
+<div class="row"><h3>现在就能用的</h3><p>网页版就是完整版：<a href="clock.html">全屏时钟</a>、<a href="stopwatch.html">秒表</a>、<a href="countdown.html">倒计时</a>、<a href="pomodoro.html">番茄钟</a>，全部免费无广告。uTools 用户可先把本页收入收藏，插件好了回来就能看到。</p></div>
+</section>
+<section class="sec" id="faq">
+<h2 class="lab">更多问题</h2>
+<div style="counter-reset:q">
+<div class="qa"><h3>时钟准吗？时间从哪来？</h3><p>读你设备自己的系统时间，每秒与系统时钟对齐，不联网校时。手机和电脑一般都会自动同步运营商或网络时间，所以通常是准的；设备时间不准它就不准。</p></div>
+<div class="qa"><h3>能把秒藏掉吗？</h3><p>不能，也没有计划。翻页钟的灵魂就在秒针那一页一页地落，藏掉秒等于拔掉灵魂；确实只想要小时分的场合，站一会儿你会发现秒才是最好看的部分。</p></div>
+<div class="qa"><h3>旧平板带得动吗？</h3><p>带得动。翻页动画只动 transform，浏览器用 GPU 合成，不重绘整页；近十年的手机和平板都跑得很顺。</p></div>
+<div class="qa"><h3>挂一晚上费电吗？</h3><p>屏幕常亮必然耗电，挂机建议插着电。全屏时申请的「保持唤醒」只是防止息屏，不会额外增加负担；退出全屏立即恢复系统默认的息屏策略。</p></div>
+<div class="qa"><h3>怎么快速退出？</h3><p>按 Esc 或 F11 退出全屏，左上角「返回首页」回落地页，关掉标签页就是彻底收工——什么都不用卸载，因为本来也没装过。</p></div>
+<div class="qa"><h3>为什么是暗色的？</h3><p>两层原因：夜间和卧室场景不刺眼；真实的机械翻页钟大多是黑底白字卡片，我们照着物理原物的样子做，暗色才对味。</p></div>
+<div class="qa"><h3>收费吗？会有会员版吗？</h3><p>不收费，也没有会员计划。静态页面没有服务器成本压力，翻页声、番茄钟、计次这些能力都会一直是免费的。</p></div>
+<div class="qa"><h3>手机上怎么用最舒服？</h3><p>浏览器打开后加到主屏幕，图标点开就是全屏体验；横放当床头钟，竖放当桌面钟。iPhone 用 Safari 的「添加到主屏幕」，安卓各浏览器都有类似入口。</p></div>
+</div>
+</section>
+</main>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">翻页时钟</a><a href="stopwatch.html">秒表</a><a href="countdown.html">倒计时</a><a href="pomodoro.html">番茄钟</a></nav></footer>
+</body>
+</html>

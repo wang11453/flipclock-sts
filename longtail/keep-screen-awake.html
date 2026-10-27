@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>屏幕常亮的翻页钟：全屏防息屏说明 | Flip 一刻</title>
+<meta name="description" content="进入全屏自动申请屏幕保持唤醒，挂一晚上不熄屏；退出全屏即恢复系统默认息屏策略。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/keep-screen-awake.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="屏幕常亮的翻页钟：全屏防息屏说明 | Flip 一刻">
+<meta property="og:description" content="进入全屏自动申请屏幕保持唤醒，挂一晚上不熄屏；退出全屏即恢复系统默认息屏策略。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/keep-screen-awake.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+.hero{position:relative;z-index:2;padding:120px 20px 30px;max-width:660px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(30px,4.6vw,44px);font-weight:900;letter-spacing:.05em;line-height:1.2}
+.hero .sub{margin-top:18px;font-size:15.5px;line-height:1.85;color:rgba(236,232,226,.6)}
+.wrap{position:relative;z-index:2;max-width:660px;margin:0 auto;width:100%;padding:0 20px 100px}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:72px}
+.sec:first-of-type{margin-top:36px}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+.hero{padding-top:96px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.back{transition:none}.ftr a{transition:none}.row p a,.qa p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"翻页时钟 屏幕常亮","url":"https://flipclock.sts.jx.cn/keep-screen-awake.html","inLanguage":"zh-CN","description":"进入全屏自动申请屏幕保持唤醒，挂一晚上不熄屏；退出全屏即恢复系统默认息屏策略。","isPartOf":{"@type":"WebSite","name":"Flip 一刻","url":"https://flipclock.sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"不全屏能常亮吗？","acceptedAnswer":{"@type":"Answer","text":"不能，这是有意的设计：常亮需求只出现在挂钟场景，绑在全屏上可以防止误开偷电。"}},{"@type":"Question","name":"手机息屏后计时会停吗？","acceptedAnswer":{"@type":"Answer","text":"手机的息屏由系统管理，页面在后台时秒表照走；回到前台会立即校正显示。"}},{"@type":"Question","name":"为什么退出全屏就不常亮了？","acceptedAnswer":{"@type":"Answer","text":"挂钟场景结束了，常亮没有理由继续；需要就再点一次全屏，成本只是一下。"}},{"@type":"Question","name":"会不会烧屏幕？","acceptedAnswer":{"@type":"Answer","text":"LCD 无此顾虑；OLED 长期静态画面建议调低亮度或定期换内容。"}},{"@type":"Question","name":"电视盒子的浏览器支持吗？","acceptedAnswer":{"@type":"Answer","text":"视具体浏览器而定，支持保持唤醒接口的都能用；不支持时用电视自己的息屏设置。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<header class="hero">
+<h1>翻页时钟 屏幕常亮</h1>
+<p class="sub">挂钟最怕的事：挂到半夜，屏幕自己黑了。系统的息屏策略不认识「这是一台钟」，它只看有没有人在操作。网页版翻页钟对此的解法是浏览器的屏幕保持唤醒接口：进入全屏时自动申请，让屏幕在你挂钟期间保持常亮；退出全屏立刻交还，息屏策略原样恢复。你不用进任何设置，也不用装任何工具，<a href="clock.html">钟面</a>左下角那个全屏动作本身就是开关。这一页讲它的工作机制、哪些浏览器支持、和系统睡眠策略的关系，以及笔记本挂机的省电建议。设备层面的搭配（平板床头、投屏大屏）分别在 <a href="flip-clock-tablet.html">平板安置</a> 与 <a href="fullscreen-flip-clock.html">全屏说明</a> 里。</p>
+</header>
+<main class="wrap">
+<section class="sec">
+<h2 class="lab">常亮怎么触发</h2>
+<div class="row"><h3>全屏即开关</h3><p>点钟面左下角按钮进入全屏，页面同时向系统申请屏幕保持唤醒；退出全屏自动释放。开关与全屏绑定，不存在单独的常亮按钮。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">哪些浏览器支持</h2>
+<div class="row"><h3>新版内核都行</h3><p>Chrome、Edge 等新版浏览器和多数安卓浏览器支持这个接口；不支持时页面照常运行，只是息屏沿用系统设置。iPhone 的 Safari 目前不支持，挂机建议用系统自带的常亮设置。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">和系统睡眠的关系</h2>
+<div class="row"><h3>它管屏幕不管机器</h3><p>保持唤醒管的是屏幕，不是整台机器。笔记本合盖、台式机的系统睡眠计划，仍然是系统说了算；挂机前把系统睡眠设为「从不」更稳妥。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">省电建议</h2>
+<div class="row"><h3>插电加降亮度</h3><p>屏幕常亮的功耗大头是背光，插电使用、按环境调低亮度，一夜的电费可以忽略。长期 OLED 挂机的注意事项见 <a href="flip-clock-tablet.html">平板安置指南</a>。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">常见问题</h2>
+<div style="counter-reset:q">
+<div class="qa"><h3>不全屏能常亮吗？</h3><p>不能，这是有意的设计：常亮需求只出现在挂钟场景，绑在全屏上可以防止误开偷电。</p></div>
+<div class="qa"><h3>手机息屏后计时会停吗？</h3><p>手机的息屏由系统管理，页面在后台时秒表照走；回到前台会立即校正显示。</p></div>
+<div class="qa"><h3>为什么退出全屏就不常亮了？</h3><p>挂钟场景结束了，常亮没有理由继续；需要就再点一次全屏，成本只是一下。</p></div>
+<div class="qa"><h3>会不会烧屏幕？</h3><p>LCD 无此顾虑；OLED 长期静态画面建议调低亮度或定期换内容。</p></div>
+<div class="qa"><h3>电视盒子的浏览器支持吗？</h3><p>视具体浏览器而定，支持保持唤醒接口的都能用；不支持时用电视自己的息屏设置。</p></div>
+</div>
+</section>
+</main>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">首页</a><a href="clock.html">全屏时钟</a><a href="countdown.html">倒计时</a><a href="guide.html">指南</a></nav></footer>
+</body>
+</html>

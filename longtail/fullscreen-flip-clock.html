@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>全屏翻页时钟：一块钟占满整块屏幕 | Flip 一刻</title>
+<meta name="description" content="点左下角按钮进入全屏，翻页钟铺满整块屏幕并自动保持唤醒；Esc 退出，手机浏览器同样支持。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/fullscreen-flip-clock.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="全屏翻页时钟：一块钟占满整块屏幕 | Flip 一刻">
+<meta property="og:description" content="点左下角按钮进入全屏，翻页钟铺满整块屏幕并自动保持唤醒；Esc 退出，手机浏览器同样支持。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/fullscreen-flip-clock.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+.hero{position:relative;z-index:2;padding:120px 20px 30px;max-width:660px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(30px,4.6vw,44px);font-weight:900;letter-spacing:.05em;line-height:1.2}
+.hero .sub{margin-top:18px;font-size:15.5px;line-height:1.85;color:rgba(236,232,226,.6)}
+.wrap{position:relative;z-index:2;max-width:660px;margin:0 auto;width:100%;padding:0 20px 100px}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:72px}
+.sec:first-of-type{margin-top:36px}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+.hero{padding-top:96px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.back{transition:none}.ftr a{transition:none}.row p a,.qa p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"翻页时钟 全屏","url":"https://flipclock.sts.jx.cn/fullscreen-flip-clock.html","inLanguage":"zh-CN","description":"点左下角按钮进入全屏，翻页钟铺满整块屏幕并自动保持唤醒；Esc 退出，手机浏览器同样支持。","isPartOf":{"@type":"WebSite","name":"Flip 一刻","url":"https://flipclock.sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"F11 和按钮进的全屏有区别吗？","acceptedAnswer":{"@type":"Answer","text":"画面上没区别，机制上有：F11 的全屏不触发网页的元素全屏，「保持唤醒」不一定跟着生效。要防息屏，认准左下角按钮。"}},{"@type":"Question","name":"全屏后右下角的按钮还在吗？","acceptedAnswer":{"@type":"Answer","text":"在，低透明度常驻，鼠标移过去会亮起；不碰它就不打扰。"}},{"@type":"Question","name":"电视或投影上怎么全屏？","acceptedAnswer":{"@type":"Answer","text":"用扩展屏把浏览器窗口拖过去再点按钮即可；或直接在投屏设备上打开页面。"}},{"@type":"Question","name":"Esc 退出后计时还在吗？","acceptedAnswer":{"@type":"Answer","text":"在。秒表和倒计时不会因为退出全屏中断，回来接着走。"}},{"@type":"Question","name":"全屏是免费的吗？","acceptedAnswer":{"@type":"Answer","text":"全部功能免费，没有解锁门槛。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<header class="hero">
+<h1>翻页时钟 全屏</h1>
+<p class="sub">全屏是这台钟的正确打开方式。窗口里它是一块表，全屏之后它是一面钟：数字放大到整个视口，落板的分量也跟着变大，站在几米外都看得清。进全屏只要一下——<a href="clock.html">钟面</a>左下角有个按钮，点它，浏览器会让出所有界面，屏幕上只剩翻页、日期和一块安静的深色。这一页讲怎么进、怎么退、全屏时屏幕为什么不会自己熄掉，以及手机浏览器上同样顺手的做法。挂会议室、放床头、垫在直播软件底下，都是同一个动作。</p>
+</header>
+<main class="wrap">
+<section class="sec">
+<h2 class="lab">进入与退出</h2>
+<div class="row"><h3>一下进，一下出</h3><p>点左下角按钮进入，再点一次或按 Esc 退出。浏览器菜单里的全屏（F11）也能用，但防息屏功能认的是左下角按钮那条路，见下一节。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">全屏时屏幕不会熄</h2>
+<div class="row"><h3>保持唤醒自动生效</h3><p>进入全屏的瞬间，页面会向系统申请「保持唤醒」，只要还挂着，屏幕就不会中途熄灭；退出全屏立刻交还，息屏策略恢复成你系统原本的样子。挂一整晚不用碰，细节见 <a href="keep-screen-awake.html">屏幕常亮说明</a>。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">手机上怎么做</h2>
+<div class="row"><h3>横是桌面钟，竖是床头钟</h3><p>手机浏览器点同一个左下角按钮即可全屏；横过来是标准三组大卡，竖过来数字自动分成三行堆叠，床头竖放正合适。加到主屏幕的用法见 <a href="flip-clock-tablet.html">平板安置指南</a>。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">多大的屏幕都合适</h2>
+<div class="row"><h3>字号跟着视口走</h3><p>数字大小随屏幕尺寸缩放，投影仪、电视、老显示器都能铺满；横竖各有排布，不需要手动调任何字号。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">常见问题</h2>
+<div style="counter-reset:q">
+<div class="qa"><h3>F11 和按钮进的全屏有区别吗？</h3><p>画面上没区别，机制上有：F11 的全屏不触发网页的元素全屏，「保持唤醒」不一定跟着生效。要防息屏，认准左下角按钮。</p></div>
+<div class="qa"><h3>全屏后右下角的按钮还在吗？</h3><p>在，低透明度常驻，鼠标移过去会亮起；不碰它就不打扰。</p></div>
+<div class="qa"><h3>电视或投影上怎么全屏？</h3><p>用扩展屏把浏览器窗口拖过去再点按钮即可；或直接在投屏设备上打开页面。</p></div>
+<div class="qa"><h3>Esc 退出后计时还在吗？</h3><p>在。秒表和倒计时不会因为退出全屏中断，回来接着走。</p></div>
+<div class="qa"><h3>全屏是免费的吗？</h3><p>全部功能免费，没有解锁门槛。</p></div>
+</div>
+</section>
+</main>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">首页</a><a href="stopwatch.html">秒表</a><a href="countdown.html">倒计时</a><a href="pomodoro.html">番茄钟</a><a href="guide.html">指南</a></nav></footer>
+</body>
+</html>

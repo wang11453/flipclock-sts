@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>上课倒计时大屏：教室投影翻页钟 | Flip 一刻</title>
+<meta name="description" content="教室投影或一体机打开倒计时页：随堂测、课间休息各有预设，归零哔三声，比铃声温和。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/classroom-countdown.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="上课倒计时大屏：教室投影翻页钟 | Flip 一刻">
+<meta property="og:description" content="教室投影或一体机打开倒计时页：随堂测、课间休息各有预设，归零哔三声，比铃声温和。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/classroom-countdown.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+.hero{position:relative;z-index:2;padding:120px 20px 30px;max-width:660px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(30px,4.6vw,44px);font-weight:900;letter-spacing:.05em;line-height:1.2}
+.hero .sub{margin-top:18px;font-size:15.5px;line-height:1.85;color:rgba(236,232,226,.6)}
+.wrap{position:relative;z-index:2;max-width:660px;margin:0 auto;width:100%;padding:0 20px 100px}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:72px}
+.sec:first-of-type{margin-top:36px}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+.hero{padding-top:96px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.back{transition:none}.ftr a{transition:none}.row p a,.qa p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"上课倒计时 大屏","url":"https://flipclock.sts.jx.cn/classroom-countdown.html","inLanguage":"zh-CN","description":"教室投影或一体机打开倒计时页：随堂测、课间休息各有预设，归零哔三声，比铃声温和。","isPartOf":{"@type":"WebSite","name":"Flip 一刻","url":"https://flipclock.sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"投影仪上颜色发灰怎么办？","acceptedAnswer":{"@type":"Answer","text":"投影亮度和环境光影响对比度；建议拉上部分窗帘，并把投影的亮度模式调到「演示」或「高亮」。"}},{"@type":"Question","name":"老师讲话会被打断吗？","acceptedAnswer":{"@type":"Answer","text":"归零只有三声短哔，持续不到两秒；翻页过程本身无声（翻页声默认关闭）。"}},{"@type":"Question","name":"中途要暂停怎么办？","acceptedAnswer":{"@type":"Answer","text":"按「暂停」随时停表，恢复接着走；也可以重置重设时长。"}},{"@type":"Question","name":"断网了教室还能用吗？","acceptedAnswer":{"@type":"Answer","text":"页面打开后全部本地运行，学校网络不稳定不影响走时。"}},{"@type":"Question","name":"能同时显示时钟和倒计时吗？","acceptedAnswer":{"@type":"Answer","text":"两个页面分别开两个标签或两块屏；单屏内是模式切换，不是同屏并显。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<header class="hero">
+<h1>上课倒计时 大屏</h1>
+<p class="sub">教室里的时间感是稀缺品：老师讲得投入，学生看不到钟，随堂测验的收卷提醒全靠喊。把倒计时挂上教室的投影或一体机，这些摩擦一次消失——剩余时间挂在墙上一目了然，学生抬头即见，收卷前的最后几分钟自己会紧张起来，不用老师催。翻页钟的形态还自带一点仪式感：秒位一页页落下，教室会安静下来。这一页讲教室场景的具体用法：设备怎么接、时长怎么选、为什么归零提醒用哔声而不是铃声，以及投影仪上显示效果的小贴士。会场类的大屏用法在隔壁 <a href="big-countdown-projector.html">投影大屏倒计时</a>，这篇专注教室。</p>
+</header>
+<main class="wrap">
+<section class="sec">
+<h2 class="lab">设备怎么接</h2>
+<div class="row"><h3>现成设备就够</h3><p>教室一体机直接开浏览器；投影仪用 HDMI 接电脑，把浏览器窗口拖到投影屏上点全屏。不需要装任何软件，U 盘都省了。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">时长怎么选</h2>
+<div class="row"><h3>预设对号入座</h3><p><a href="countdown.html">倒计时页</a>带 1 到 45 分钟预设：随堂小测 10 或 15 分钟，课间休息 10 分钟，考前提醒用自定义分秒。常用时长一键开始，不用每次手填。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">为什么用哔声</h2>
+<div class="row"><h3>温和的截止线</h3><p>归零时哔三声，短促、温和、不打断讲课；铃声在教室里容易惊到讲话的人和走神的人，翻页加哔声刚好够全班听见。翻页过程本身无声，翻页声默认关闭。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">后排看得清吗</h2>
+<div class="row"><h3>字号随幕布走</h3><p>数字大小跟随屏幕尺寸缩放，投影幕上翻页卡占满视野，后排抬头即见；暗色底在明亮教室里对比度也够。平时走时可以直接挂 <a href="clock.html">全屏时钟</a>，考试再切倒计时。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">常见问题</h2>
+<div style="counter-reset:q">
+<div class="qa"><h3>投影仪上颜色发灰怎么办？</h3><p>投影亮度和环境光影响对比度；建议拉上部分窗帘，并把投影的亮度模式调到「演示」或「高亮」。</p></div>
+<div class="qa"><h3>老师讲话会被打断吗？</h3><p>归零只有三声短哔，持续不到两秒；翻页过程本身无声（翻页声默认关闭）。</p></div>
+<div class="qa"><h3>中途要暂停怎么办？</h3><p>按「暂停」随时停表，恢复接着走；也可以重置重设时长。</p></div>
+<div class="qa"><h3>断网了教室还能用吗？</h3><p>页面打开后全部本地运行，学校网络不稳定不影响走时。</p></div>
+<div class="qa"><h3>能同时显示时钟和倒计时吗？</h3><p>两个页面分别开两个标签或两块屏；单屏内是模式切换，不是同屏并显。</p></div>
+</div>
+</section>
+</main>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">首页</a><a href="clock.html">全屏时钟</a><a href="countdown.html">倒计时</a><a href="guide.html">指南</a></nav></footer>
+</body>
+</html>

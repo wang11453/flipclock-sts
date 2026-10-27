@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>翻页时钟有声音吗：机械翻页声说明 | Flip 一刻</title>
+<meta name="description" content="有。翻页声默认关闭，面板一键打开；WebAudio 现场合成的机械嗒声，连翻时自动静音。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/flip-clock-sound.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="翻页时钟有声音吗：机械翻页声说明 | Flip 一刻">
+<meta property="og:description" content="有。翻页声默认关闭，面板一键打开；WebAudio 现场合成的机械嗒声，连翻时自动静音。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/flip-clock-sound.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+.hero{position:relative;z-index:2;padding:120px 20px 30px;max-width:660px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(30px,4.6vw,44px);font-weight:900;letter-spacing:.05em;line-height:1.2}
+.hero .sub{margin-top:18px;font-size:15.5px;line-height:1.85;color:rgba(236,232,226,.6)}
+.wrap{position:relative;z-index:2;max-width:660px;margin:0 auto;width:100%;padding:0 20px 100px}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:72px}
+.sec:first-of-type{margin-top:36px}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+.hero{padding-top:96px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.back{transition:none}.ftr a{transition:none}.row p a,.qa p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"翻页时钟 有声音吗","url":"https://flipclock.sts.jx.cn/flip-clock-sound.html","inLanguage":"zh-CN","description":"有。翻页声默认关闭，面板一键打开；WebAudio 现场合成的机械嗒声，连翻时自动静音。","isPartOf":{"@type":"WebSite","name":"Flip 一刻","url":"https://flipclock.sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"第一次点开怎么没声音？","acceptedAnswer":{"@type":"Answer","text":"浏览器要求先有用户操作才允许出声；点按钮本身就是操作，再翻一页就有了。"}},{"@type":"Question","name":"音量能调吗？","acceptedAnswer":{"@type":"Answer","text":"页面不做音量条，跟随系统音量；用系统音量键控制即可。"}},{"@type":"Question","name":"直播间里会被采进去吗？","acceptedAnswer":{"@type":"Answer","text":"OBS 的浏览器源会采集页面音频；不想让嗒声进直播，保持默认关闭就好。"}},{"@type":"Question","name":"为什么用合成声不用录音？","acceptedAnswer":{"@type":"Answer","text":"合成声体积极小、每次都干净一致，也不存在加载失败；质感上它是「嗒」，不是「哗」。"}},{"@type":"Question","name":"声音频率能改吗？","acceptedAnswer":{"@type":"Answer","text":"目前不能，就一种翻页声；嫌多关掉，嫌少开着。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<header class="hero">
+<h1>翻页时钟 有声音吗</h1>
+<p class="sub">有，而且默认安静。翻页声是这个钟的选装件：<a href="clock.html">全屏时钟</a>面板里有个「翻页声」按钮，点开，每一页落板都伴着一声机械的「嗒」；点回关，钟立刻哑然。默认关闭不是偷懒——多数挂钟场景（床头、办公室、直播间画面）里，安静是礼貌，想听的人一下就能打开。这一页讲这声音是怎么来的、怎么开关、连翻的时候为什么故意不出声，以及倒计时归零那三声哔和翻页声的关系。要把声音留在直播画面里的人，先读读 <a href="obs-flip-clock.html">OBS 挂钟</a> 里的音频提示。</p>
+</header>
+<main class="wrap">
+<section class="sec">
+<h2 class="lab">声音从哪来</h2>
+<div class="row"><h3>浏览器现场合成</h3><p>它不是录好的音频文件，是浏览器用 WebAudio 现场合成的：一段急速衰减的噪声脉冲模拟纸面拍击，一声低频滑落模拟机芯闷响。零音频文件，页面依旧轻。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">怎么开关</h2>
+<div class="row"><h3>面板一键</h3><p>右下面板里点「翻页声」即开，再点即关；开关记在浏览器本地，下次打开保持你的选择。其他工具页（秒表、倒计时）有自己的声音逻辑，互不影响。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">连翻为什么静音</h2>
+<div class="row"><h3>防机关枪</h3><p>数字跨跳时多页连翻，如果每一页都出声就成了机关枪；级联快翻段自动静音，只在最后落板那一下收声，机械感保留，吵闹去掉。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">归零的哔声</h2>
+<div class="row"><h3>另一条轨道</h3><p><a href="countdown.html">倒计时</a>归零哔三声，这是独立于翻页声的提醒，跟翻页声开不开都响；<a href="pomodoro.html">番茄钟</a>的阶段切换同理。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">常见问题</h2>
+<div style="counter-reset:q">
+<div class="qa"><h3>第一次点开怎么没声音？</h3><p>浏览器要求先有用户操作才允许出声；点按钮本身就是操作，再翻一页就有了。</p></div>
+<div class="qa"><h3>音量能调吗？</h3><p>页面不做音量条，跟随系统音量；用系统音量键控制即可。</p></div>
+<div class="qa"><h3>直播间里会被采进去吗？</h3><p>OBS 的浏览器源会采集页面音频；不想让嗒声进直播，保持默认关闭就好。</p></div>
+<div class="qa"><h3>为什么用合成声不用录音？</h3><p>合成声体积极小、每次都干净一致，也不存在加载失败；质感上它是「嗒」，不是「哗」。</p></div>
+<div class="qa"><h3>声音频率能改吗？</h3><p>目前不能，就一种翻页声；嫌多关掉，嫌少开着。</p></div>
+</div>
+</section>
+</main>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">首页</a><a href="stopwatch.html">秒表</a><a href="countdown.html">倒计时</a><a href="pomodoro.html">番茄钟</a><a href="guide.html">指南</a></nav></footer>
+</body>
+</html>

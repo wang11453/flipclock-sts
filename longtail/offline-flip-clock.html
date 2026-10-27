@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>断网能用的翻页时钟：走时不出网 | Flip 一刻</title>
+<meta name="description" content="页面打开后走时全部在本地完成，拔掉网线照常翻页；秒表、倒计时、番茄钟同样不依赖网络。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/offline-flip-clock.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="断网能用的翻页时钟：走时不出网 | Flip 一刻">
+<meta property="og:description" content="页面打开后走时全部在本地完成，拔掉网线照常翻页；秒表、倒计时、番茄钟同样不依赖网络。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/offline-flip-clock.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+.hero{position:relative;z-index:2;padding:120px 20px 30px;max-width:660px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(30px,4.6vw,44px);font-weight:900;letter-spacing:.05em;line-height:1.2}
+.hero .sub{margin-top:18px;font-size:15.5px;line-height:1.85;color:rgba(236,232,226,.6)}
+.wrap{position:relative;z-index:2;max-width:660px;margin:0 auto;width:100%;padding:0 20px 100px}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:72px}
+.sec:first-of-type{margin-top:36px}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+.hero{padding-top:96px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.back{transition:none}.ftr a{transition:none}.row p a,.qa p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"翻页时钟 离线可用","url":"https://flipclock.sts.jx.cn/offline-flip-clock.html","inLanguage":"zh-CN","description":"页面打开后走时全部在本地完成，拔掉网线照常翻页；秒表、倒计时、番茄钟同样不依赖网络。","isPartOf":{"@type":"WebSite","name":"Flip 一刻","url":"https://flipclock.sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"首次打开一定要联网吗？","acceptedAnswer":{"@type":"Answer","text":"是。至少第一次要把页面取下来；之后挂着用就不再需要网络。"}},{"@type":"Question","name":"断网后时间还准吗？","acceptedAnswer":{"@type":"Answer","text":"准。时间读你设备的系统时钟，和联网与否无关；设备本身的时间准，它就准。"}},{"@type":"Question","name":"会偷偷联网上报吗？","acceptedAnswer":{"@type":"Answer","text":"不会。页面里没有任何统计、信标或上报代码，这点可以用浏览器开发者工具的网络面板验证。"}},{"@type":"Question","name":"停电重启后怎么办？","acceptedAnswer":{"@type":"Answer","text":"重新打开页面即可；秒表和倒计时的进度不跨刷新保存，番茄钟的当日轮数在本机保留。"}},{"@type":"Question","name":"以后会加离线安装吗？","acceptedAnswer":{"@type":"Answer","text":"不承诺。真做了，更新日志和指南页会第一时间写。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<header class="hero">
+<h1>翻页时钟 离线可用</h1>
+<p class="sub">先把话说准：第一次打开这个页面需要一次网络；打开之后，它就不再需要任何网络了。走时读的是你设备的系统时钟，秒表、倒计时、番茄钟全部在本地计算，翻页声由浏览器现场合成——没有一段声音、一个数字需要从服务器取。飞机上、高铁过隧道、学校机房断外网、公司内网只放行白名单，这些场景它都照常工作。这一页讲清楚哪些事发生在本地、怎么自己验证「它真的不联网」，以及刷新页面为什么需要网络这种边角问题。隐私角度的延伸阅读在同站的 <a href="no-login-flip-clock.html">免登录说明</a>，两篇合起来是这个站的完整数据观。</p>
+</header>
+<main class="wrap">
+<section class="sec">
+<h2 class="lab">哪些事在本地发生</h2>
+<div class="row"><h3>全部计时与发声</h3><p>走时、秒表、倒计时、番茄钟的计时，翻页声的合成，偏好与轮数的存储——全部在你的设备上完成。<a href="clock.html">页面</a>加载完成后不再发出任何请求，拔掉网线可以亲自验证。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">怎么自己测</h2>
+<div class="row"><h3>一分钟实验</h3><p>打开全屏时钟，等它走起来，然后断开 Wi-Fi 或拔掉网线。秒照翻、表照走、倒计时照响，什么都不变。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">刷新为什么需要网</h2>
+<div class="row"><h3>版本核对的代价</h3><p>我们让浏览器每次都核对页面版本，保证你看到的总是最新版；这个核对需要联网。挂着不动它就一直走，只有刷新这一下要网。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">安装成离线应用支持吗</h2>
+<div class="row"><h3>暂不支持，边界说清</h3><p>离线打开页面需要额外的一套缓存机制，目前没有做；现有的能力是「加载后完全离线运行」。夸大的承诺不如准确的边界，这是我们的取舍。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">常见问题</h2>
+<div style="counter-reset:q">
+<div class="qa"><h3>首次打开一定要联网吗？</h3><p>是。至少第一次要把页面取下来；之后挂着用就不再需要网络。</p></div>
+<div class="qa"><h3>断网后时间还准吗？</h3><p>准。时间读你设备的系统时钟，和联网与否无关；设备本身的时间准，它就准。</p></div>
+<div class="qa"><h3>会偷偷联网上报吗？</h3><p>不会。页面里没有任何统计、信标或上报代码，这点可以用浏览器开发者工具的网络面板验证。</p></div>
+<div class="qa"><h3>停电重启后怎么办？</h3><p>重新打开页面即可；秒表和倒计时的进度不跨刷新保存，番茄钟的当日轮数在本机保留。</p></div>
+<div class="qa"><h3>以后会加离线安装吗？</h3><p>不承诺。真做了，<a href="guide.html">指南</a>和更新记录会第一时间写。</p></div>
+</div>
+</section>
+</main>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">首页</a><a href="clock.html">全屏时钟</a><a href="countdown.html">倒计时</a><a href="pomodoro.html">番茄钟</a><a href="guide.html">指南</a></nav></footer>
+</body>
+</html>

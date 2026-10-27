@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>12/24 小时制切换：翻页时钟两种表盘 | Flip 一刻</title>
+<meta name="description" content="右下面板 24h/12h 一键切换，12 小时制亮出 AM/PM 小标；选择记在当前页面，刷新回默认。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/time-format-12-24.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="12/24 小时制切换：翻页时钟两种表盘 | Flip 一刻">
+<meta property="og:description" content="右下面板 24h/12h 一键切换，12 小时制亮出 AM/PM 小标；选择记在当前页面，刷新回默认。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/time-format-12-24.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+.hero{position:relative;z-index:2;padding:120px 20px 30px;max-width:660px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(30px,4.6vw,44px);font-weight:900;letter-spacing:.05em;line-height:1.2}
+.hero .sub{margin-top:18px;font-size:15.5px;line-height:1.85;color:rgba(236,232,226,.6)}
+.wrap{position:relative;z-index:2;max-width:660px;margin:0 auto;width:100%;padding:0 20px 100px}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:72px}
+.sec:first-of-type{margin-top:36px}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+.hero{padding-top:96px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.back{transition:none}.ftr a{transition:none}.row p a,.qa p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"翻页时钟 12/24 小时制","url":"https://flipclock.sts.jx.cn/time-format-12-24.html","inLanguage":"zh-CN","description":"右下面板 24h/12h 一键切换，12 小时制亮出 AM/PM 小标；选择记在当前页面，刷新回默认。","isPartOf":{"@type":"WebSite","name":"Flip 一刻","url":"https://flipclock.sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"会记住我的选择吗？","acceptedAnswer":{"@type":"Answer","text":"当前页面里会保持到你刷新或关闭；下次打开默认 24 小时制。"}},{"@type":"Question","name":"为什么不做记忆？","acceptedAnswer":{"@type":"Answer","text":"偏好存储功能上做得了；但「即用即走、不留档案」是这台钟的底线，两秒的设置换干净的本子，划算。"}},{"@type":"Question","name":"秒表和倒计时受影响吗？","acceptedAnswer":{"@type":"Answer","text":"不受。它们按总时长走，不存在上下午，12/24 切换只影响时钟表盘。"}},{"@type":"Question","name":"手机上一样能切吗？","acceptedAnswer":{"@type":"Answer","text":"一样，按钮在右下面板，位置和桌面版一致。"}},{"@type":"Question","name":"其他页面有 12 小时制吗？","acceptedAnswer":{"@type":"Answer","text":"只有全屏时钟页有；秒表、倒计时、番茄钟没有时刻概念。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<header class="hero">
+<h1>翻页时钟 12/24 小时制</h1>
+<p class="sub">同一块翻页钟，两种读法。<a href="clock.html">全屏时钟</a>右下面板里有 24h 和 12h 两个按钮，点一下整块表立刻切换：24 小时制直给，晚上九点就是 21；12 小时制温软，左上角亮出一枚 AM/PM 小标，早九点是 9，夜里的九点是 9 加 PM。切换不需要进任何设置页，也不用刷新，当场生效。这一页讲两种制的细节、那个 AM/PM 小标亮在哪、以及为什么这个偏好只记在当前页面——这是有意的选择，和整台钟「即用即走」的性格一致。挂屏姿势与屏幕大小的搭配，见 <a href="fullscreen-flip-clock.html">全屏说明</a>。</p>
+</header>
+<main class="wrap">
+<section class="sec">
+<h2 class="lab">怎么切换</h2>
+<div class="row"><h3>右下面板两颗按钮</h3><p>时钟模式下，24h 与 12h 点选即换，表盘即时重排，秒位走时不受影响，翻页动画照常。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">AM/PM 亮在哪</h2>
+<div class="row"><h3>第一张卡的左上角</h3><p>12 小时制下，时位第一张卡左上角亮出小号 AM 或 PM；正午是 PM 的起点，午夜零点显示为 12 AM，与常见电子钟的习惯一致。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">为什么不记住设置</h2>
+<div class="row"><h3>即用即走的底线</h3><p>偏好只活在当前页面，刷新回到 24 小时制。没有账号、没有跨设备同步，这台钟连一个设置项都不想替你保管；下次打开，两下点回自己的习惯，成本不超过两秒。数据观的完整版见 <a href="no-login-flip-clock.html">免登录说明</a>。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">12 制下的午夜与正午</h2>
+<div class="row"><h3>两个 12 点</h3><p>数字翻到 12 AM 是新一天开始，12 PM 是正午；级联翻页照常工作，从 11 跨到 12 的那一页照样干脆利落。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">常见问题</h2>
+<div style="counter-reset:q">
+<div class="qa"><h3>会记住我的选择吗？</h3><p>当前页面里会保持到你刷新或关闭；下次打开默认 24 小时制。</p></div>
+<div class="qa"><h3>为什么不做记忆？</h3><p>偏好存储功能上做得了；但「即用即走、不留档案」是这台钟的底线，两秒的设置换干净的本子，划算。</p></div>
+<div class="qa"><h3>秒表和倒计时受影响吗？</h3><p>不受。它们按总时长走，不存在上下午，12/24 切换只影响时钟表盘。</p></div>
+<div class="qa"><h3>手机上一样能切吗？</h3><p>一样，按钮在右下面板，位置和桌面版一致。</p></div>
+<div class="qa"><h3>其他页面有 12 小时制吗？</h3><p>只有全屏时钟页有；秒表、倒计时、番茄钟没有时刻概念。</p></div>
+</div>
+</section>
+</main>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">首页</a><a href="stopwatch.html">秒表</a><a href="countdown.html">倒计时</a><a href="pomodoro.html">番茄钟</a><a href="guide.html">指南</a></nav></footer>
+</body>
+</html>

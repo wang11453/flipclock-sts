@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>翻页番茄钟 - 25 分钟专注计时，自动轮转 | Flip 一刻</title>
+<meta name="description" content="浏览器里的免费在线番茄钟：25 分钟专注与 5 分钟休息自动轮转，翻页显示剩余时间，今日专注轮数自动记录，时长可自定义，无需下载，打开即用。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/pomodoro.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="翻页番茄钟 - 25 分钟专注计时，自动轮转 | Flip 一刻">
+<meta property="og:description" content="浏览器里的免费在线番茄钟：25 分钟专注与 5 分钟休息自动轮转，翻页显示剩余时间，今日专注轮数自动记录，时长可自定义，无需下载，打开即用。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/pomodoro.html">
+<meta property="og:image" content="https://flipclock.sts.jx.cn/og-pomodoro.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="翻页番茄钟 - 25 分钟专注计时，自动轮转 | Flip 一刻">
+<meta name="twitter:description" content="浏览器里的免费在线番茄钟：25 分钟专注与 5 分钟休息自动轮转，翻页显示剩余时间，今日专注轮数自动记录，时长可自定义，无需下载，打开即用。">
+<meta name="twitter:image" content="https://flipclock.sts.jx.cn/og-pomodoro.png">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--ch:min(38vh,24vw);
+--cw:calc(var(--ch)*.72);
+--gap:calc(var(--ch)*.07);
+--rad:calc(var(--ch)*.042);
+--dfs:calc(var(--ch)*.92);
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible,button:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+main{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:84px 20px 60px}
+.clockrow{position:relative;display:flex;gap:var(--gap);align-items:center}
+.clockrow::after{content:"";position:absolute;left:4%;right:4%;bottom:calc(var(--ch)*-.18);height:calc(var(--ch)*.15);background:radial-gradient(50% 100% at 50% 50%,rgba(0,0,0,.68),transparent 72%);filter:blur(10px);z-index:-1}
+.card{position:relative;display:flex;width:calc(var(--cw)*2);height:var(--ch);border-radius:var(--rad);overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.5),0 calc(var(--ch)*.2) calc(var(--ch)*.42) rgba(0,0,0,.55),inset 0 1px 0 rgba(255,246,230,.06),inset 0 -1px 0 rgba(0,0,0,.55)}
+.card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#2e2b28 0%,#201d1b 38%,#0c0b0a 49.5%,#0c0b0a 50.5%,#1b1815 56%,#100e0c 100%)}
+.card::after{content:"";position:absolute;left:0;right:0;top:calc(50% - 3.2%);height:6.4%;background:linear-gradient(180deg,rgba(0,0,0,.3),rgba(0,0,0,.7) 48%,rgba(0,0,0,.7) 52%,rgba(0,0,0,.28));z-index:1;pointer-events:none}
+.seam{position:absolute;left:0;right:0;top:calc(50% - 2px);height:4px;background:#040403;z-index:6}
+.seam::after{content:"";position:absolute;left:0;right:0;top:calc(50% - 1px);height:1px;background:rgba(236,232,226,.3);box-shadow:0 0 7px rgba(236,232,226,.16)}
+.dg{position:relative;width:50%;height:100%;perspective:calc(var(--ch)*1.6)}
+.dg span{position:absolute;left:0;width:100%;height:50%;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.dg span::after{content:var(--d,"0");position:absolute;left:0;width:100%;height:200%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:var(--dfs);font-weight:400;letter-spacing:0;line-height:1;font-variant-numeric:tabular-nums;color:transparent;background:linear-gradient(180deg,#faf7f1 0%,#e6e1d8 55%,#c8c2b7 100%);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5));transform:scaleX(.92) translateY(-.015em)}
+.h-t{top:0;z-index:2}
+.h-b{top:50%;z-index:2}
+.h-t::after{top:0}
+.h-b::after{top:-100%}
+.f-f{top:0;z-index:4;transform-origin:50% 100%;background:linear-gradient(180deg,#2c2a27,#211f1d);display:none;will-change:transform}
+.f-b{top:50%;z-index:3;transform-origin:50% 0%;background:linear-gradient(180deg,#131110,#0d0c0b);display:none;will-change:transform}
+.f-f::after{top:0}
+.f-b::after{top:-100%}
+.f-f::before,.f-b::before{content:"";position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+.f-f.run{display:flex;animation:fdown .3s cubic-bezier(.4,.08,.55,.98) forwards}
+.f-b.run{display:flex;animation:fup .3s cubic-bezier(.4,.08,.55,.98) both}
+.f-f.run::before{animation:fshade .3s cubic-bezier(.4,0,.55,1) forwards}
+.f-b.run::before{animation:fshade2 .3s cubic-bezier(.4,0,.55,1) forwards}
+@keyframes fdown{from{transform:rotateX(0)}to{transform:rotateX(-180deg)}}
+@keyframes fup{from{transform:rotateX(180deg)}to{transform:rotateX(0)}}
+@keyframes fshade{from{opacity:0}to{opacity:.34}}
+@keyframes fshade2{from{opacity:.34}to{opacity:0}}
+.dg.fast .f-f.run{animation-duration:.12s}
+.dg.fast .f-b.run{animation-duration:.12s}
+.dg.fast .f-f.run::before{animation-duration:.12s}
+.dg.fast .f-b.run::before{animation-duration:.12s}
+.card.snap .seam::after{box-shadow:0 0 10px rgba(250,247,241,.5)}
+@media (prefers-reduced-motion: reduce){.f-f,.f-b{display:none!important}}
+.phase{margin-top:calc(var(--ch)*.16);font-size:clamp(15px,2vw,19px);font-weight:700;letter-spacing:.6em;text-indent:.6em;color:var(--ink)}
+.phase.rest{color:rgba(236,232,226,.62)}
+.rounds{margin-top:12px;font-size:13px;letter-spacing:.08em;color:rgba(236,232,226,.5)}
+.dots{margin-top:14px;display:flex;gap:8px}
+.dots i{width:6px;height:6px;border-radius:50%;border:1px solid rgba(236,232,226,.4)}
+.dots i.on{background:rgba(236,232,226,.85);border-color:rgba(236,232,226,.85)}
+.ctl{margin-top:32px;display:flex;gap:10px}
+.ctl button{font-size:13.5px;letter-spacing:.1em;padding:11px 30px;border-radius:2px;border:1px solid rgba(236,232,226,.3);background:rgba(236,232,226,.03);color:rgba(236,232,226,.75);cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.ctl button:hover{color:var(--ink);border-color:rgba(236,232,226,.55);background:rgba(236,232,226,.07)}
+.ctl button.pri{background:var(--ink);border-color:var(--ink);color:#17130f;font-weight:650}
+.ctl button.pri:hover{background:#fbf8f3;border-color:#fbf8f3}
+.set{margin-top:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:center;font-size:12.5px;color:rgba(236,232,226,.55)}
+.set label{display:flex;align-items:center;gap:6px}
+.set input{width:52px;font:inherit;font-size:14px;color:var(--ink);text-align:center;background:rgba(236,232,226,.04);border:1px solid rgba(236,232,226,.16);border-radius:2px;padding:6px 2px}
+.set input::-webkit-outer-spin-button,.set input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.set button{font-size:12.5px;padding:8px 18px;border-radius:2px;border:1px solid rgba(236,232,226,.28);background:rgba(236,232,226,.03);color:rgba(236,232,226,.7);cursor:pointer;transition:color .2s,border-color .2s}
+.set button:hover{color:var(--ink);border-color:rgba(236,232,226,.5)}
+.about{position:relative;z-index:2;border-top:1px solid var(--hair);padding:64px 20px 90px;background:linear-gradient(180deg,rgba(255,243,224,.014),transparent 30%)}
+.wrap{max-width:660px;margin:0 auto;text-align:left}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:60px}
+.lead{font-size:16px;line-height:1.95;color:rgba(236,232,226,.74)}
+.lead em{font-style:normal;color:var(--ink)}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+:root{--ch:min(26vh,19vw)}
+main{padding:74px 16px 50px}
+.ctl button{padding:10px 20px;font-size:12.5px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.ctl button{transition:none}.back{transition:none}.ftr a{transition:none}.row p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"翻页番茄钟","alternateName":"Flip 一刻","url":"https://flipclock.sts.jx.cn/pomodoro.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","inLanguage":"zh-CN","description":"浏览器里的免费在线番茄钟：25 分钟专注与 5 分钟休息自动轮转，翻页显示剩余时间，今日专注轮数自动记录，时长可自定义，无需下载，打开即用。","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"author":{"@type":"Organization","name":"sts.jx.cn","url":"https://sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://flipclock.sts.jx.cn/"},{"@type":"ListItem","position":2,"name":"翻页番茄钟","item":"https://flipclock.sts.jx.cn/pomodoro.html"}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<main>
+<div class="clockrow" id="face" role="timer" aria-label="翻页番茄钟">
+<div class="card">
+<span class="seam" aria-hidden="true"></span>
+<div class="dg" id="dM1" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+<div class="dg" id="dM2" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+</div>
+<div class="card">
+<span class="seam" aria-hidden="true"></span>
+<div class="dg" id="dS1" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+<div class="dg" id="dS2" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+</div>
+</div>
+<p class="phase" id="phase">专注</p>
+<p class="rounds" id="rounds">今日专注 0 轮</p>
+<div class="dots" id="dots" aria-hidden="true"></div>
+<div class="ctl">
+<button type="button" class="pri" id="go">开始</button>
+<button type="button" id="skip">跳过</button>
+<button type="button" id="rst">重置</button>
+</div>
+<div class="set">
+<label>专注 <input id="fmin" type="number" min="1" max="120" value="25"></label>
+<label>休息 <input id="rmin" type="number" min="1" max="30" value="5"></label>
+<button type="button" id="apply">应用</button>
+</div>
+</main>
+<section class="about">
+<div class="wrap">
+<h1 class="lab">翻页番茄钟</h1>
+<p class="lead">番茄工作法的全部仪式感，就是「一段时间只做一件事」。<em>25 分钟专注，5 分钟休息</em>，到点自动轮转，翻页钟负责把这两段时间变成看得见的仪式——专注时盯着它落页，休息时看它倒数，一轮结束哔一声，计数自动加一。</p>
+<div class="sec">
+<h2 class="lab">怎么用</h2>
+<div class="row"><h3>专注 25 分钟</h3><p>点「开始」进入专注段。这 25 分钟里表盘翻到 00 就算完成一轮，哔声提醒后自动进入休息，不需要你碰任何东西。</p></div>
+<div class="row"><h3>休息 5 分钟</h3><p>休息段表盘暗一档、标签换成「休息」。起身倒杯水、看看窗外，翻到 00 自动回到专注段，循环往复。</p></div>
+<div class="row"><h3>自定义时长</h3><p>默认 25/5 不合适就改：表盘下方填专注与休息的分钟数，点「应用」即生效，设置记在浏览器里，下次打开还是你的节奏。</p></div>
+<div class="row"><h3>跳过与重置</h3><p>状态不对就「跳过」直接换段（跳过的专注段不计入轮数）；「重置」回到专注段并停表，今日轮数保留。</p></div>
+</div>
+<div class="sec">
+<h2 class="lab">适合谁</h2>
+<div class="row"><h3>自习与备考</h3><p>一轮一轮地啃题和背书，比「学一晚上」的模糊目标更容易坚持；今日轮数就是最直观的进度条。</p></div>
+<div class="row"><h3>写代码与写作</h3><p>进入状态前的杂念、刷手机的冲动，都被「这一轮先做完」挡住；休息段强制离开屏幕，眼睛和腰都谢你。</p></div>
+<div class="row"><h3>家务与整理</h3><p>25 分钟收拾一个角落，5 分钟喝水歇脚，几个循环下来家里就清爽了——番茄钟从来不只是学习工具。</p></div>
+</div>
+<div class="sec">
+<h2 class="lab">和倒计时有什么不同</h2>
+<div class="row"><h3>自动轮转</h3><p><a href="countdown.html">倒计时</a>归零就停，番茄钟归零自动切换专注与休息，一直转下去，适合整段时间的工作节奏。</p></div>
+<div class="row"><h3>轮数记录</h3><p>每完成一个专注段，今日轮数自动加一（只存在你的浏览器里，换天自动清零）；看着点阵一格格亮起来，是番茄钟版本的签到。</p></div>
+</div>
+</div>
+</section>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">翻页时钟</a><a href="stopwatch.html">秒表</a><a href="countdown.html">倒计时</a><a href="guide.html">指南</a></nav></footer>
+<script>
+(function(){
+var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var face=document.getElementById('face');
+var phaseEl=document.getElementById('phase');
+var roundsEl=document.getElementById('rounds');
+var dotsEl=document.getElementById('dots');
+var goBtn=document.getElementById('go');
+var skipBtn=document.getElementById('skip');
+var rstBtn=document.getElementById('rst');
+var units=['dM1','dM2','dS1','dS2'].map(function(i){return document.getElementById(i);});
+function pad(n){return (n<10?'0':'')+n;}
+function put(el,v){el.style.setProperty('--d','"'+v+'"');}
+function halves(u){return u.querySelectorAll('.h-t,.h-b');}
+function flipOnce(u,shown,target,fast){
+var st=halves(u);var ff=u.querySelector('.f-f');var fb=u.querySelector('.f-b');
+put(st[0],target);put(st[1],shown);put(ff,shown);put(fb,target);
+ff.classList.remove('run');fb.classList.remove('run');
+if(fast)u.classList.add('fast');else u.classList.remove('fast');
+void u.offsetWidth;ff.classList.add('run');fb.classList.add('run');
+var card=u.closest('.card');
+if(card&&fast===false&&u._casc){card.classList.add('snap');setTimeout(function(){card.classList.remove('snap');},140);}
+}
+function setDigit(u,v,anim){
+if(u._busy){u._want=v;return;}
+var cur=u.getAttribute('data-v');if(cur===v)return;
+u.setAttribute('data-v',v);
+var st=halves(u);var ff=u.querySelector('.f-f');var fb=u.querySelector('.f-b');
+if(!anim||reduced||!cur){put(st[0],v);put(st[1],v);put(ff,v);put(fb,v);return;}
+var num=parseInt(cur,10);var nv=parseInt(v,10);
+var d=(nv-num+10)%10;var steps=[];
+if(d>1&&d<=3){for(var i=1;i<=d;i++)steps.push(String((num+i)%10));}
+if(steps[steps.length-1]!==v||!steps.length)steps.push(v);
+u._casc=steps.length>1;
+u._busy=true;var shown=cur;var i=0;
+function next(){
+var target=steps[i];var last=i===steps.length-1;
+flipOnce(u,shown,target,!last);shown=target;i++;
+if(i<steps.length){u._t=setTimeout(next,128);}
+else{u._t=setTimeout(function(){u._busy=false;put(st[1],v);var w=u._want;u._want=undefined;if(w&&w!==u.getAttribute('data-v'))setDigit(u,w,true);},last?400:160);}
+}
+next();
+}
+function render(m,s,anim){
+setDigit(units[0],pad(m).charAt(0),anim);
+setDigit(units[1],pad(m).charAt(1),anim);
+setDigit(units[2],pad(s).charAt(0),anim);
+setDigit(units[3],pad(s).charAt(1),anim);
+face.setAttribute('aria-label',(phase==='focus'?'专注':'休息')+' 剩余 '+pad(m)+':'+pad(s));
+}
+var FOCUS=25*60,REST=5*60;
+var fmin=document.getElementById('fmin');
+var rmin=document.getElementById('rmin');
+try{
+var ct=JSON.parse(localStorage.getItem('fcpomoT')||'null');
+if(ct&&ct.f>=1&&ct.f<=120&&ct.r>=1&&ct.r<=30){FOCUS=ct.f*60;REST=ct.r*60;fmin.value=ct.f;rmin.value=ct.r;}
+}catch(e){}
+var phase='focus',running=false,left=FOCUS,end=0,timer=null;
+var done=0;
+try{
+var rec=JSON.parse(localStorage.getItem('fcpomo')||'null');
+var today=new Date().toDateString();
+if(rec&&rec.d===today)done=rec.n|0;
+}catch(e){}
+function save(){
+try{localStorage.setItem('fcpomo',JSON.stringify({d:new Date().toDateString(),n:done}));}catch(e){}
+}
+function showRounds(){
+roundsEl.textContent='今日专注 '+done+' 轮';
+var show=Math.max(4,Math.min(done,8));
+dotsEl.innerHTML='';
+for(var i=0;i<show;i++){
+var d=document.createElement('i');
+if(i<done)d.className='on';
+dotsEl.appendChild(d);
+}
+}
+function setPhase(p){
+phase=p;
+phaseEl.textContent=p==='focus'?'专注':'休息';
+phaseEl.classList.toggle('rest',p!=='focus');
+}
+function arm(){
+clearTimeout(timer);
+if(!running)return;
+var r=(end-Date.now())%1000;
+var d=(r<0?r+1000:r)+40;
+if(d>0&&d<=1100)timer=setTimeout(tick,d);
+}
+function tick(){
+if(running){
+var r=Math.max(0,Math.ceil((end-Date.now())/1000));
+if(r<left)left=r;
+}
+render(Math.floor(left/60),left%60,true);
+if(running&&left===0)switchPhase(true);
+arm();
+}
+function switchPhase(count){
+if(phase==='focus'){
+if(count){done++;save();showRounds();}
+setPhase('rest');left=REST;
+}else{
+setPhase('focus');left=FOCUS;
+}
+if(running){end=Date.now()+left*1000;beep();}
+var f=[Math.floor(left/60),left%60];
+render(f[0],f[1],false);
+arm();
+}
+goBtn.addEventListener('click',function(){
+if(running){left=Math.max(0,Math.ceil((end-Date.now())/1000));running=false;goBtn.textContent='继续';}
+else{end=Date.now()+left*1000;running=true;goBtn.textContent='暂停';tick();}
+});
+skipBtn.addEventListener('click',function(){switchPhase(false);});
+rstBtn.addEventListener('click',function(){
+running=false;clearTimeout(timer);
+setPhase('focus');left=FOCUS;
+render(Math.floor(FOCUS/60),FOCUS%60,false);goBtn.textContent='开始';
+});
+document.getElementById('apply').addEventListener('click',function(){
+var f=Math.min(120,Math.max(1,Math.floor(+fmin.value||25)));
+var r=Math.min(30,Math.max(1,Math.floor(+rmin.value||5)));
+fmin.value=f;rmin.value=r;
+FOCUS=f*60;REST=r*60;
+try{localStorage.setItem('fcpomoT',JSON.stringify({f:f,r:r}));}catch(e){}
+running=false;clearTimeout(timer);
+setPhase('focus');left=FOCUS;
+render(Math.floor(FOCUS/60),FOCUS%60,false);goBtn.textContent='开始';
+});
+document.addEventListener('keydown',function(e){
+if(e.code!=='Space')return;
+var ae=document.activeElement;
+if(ae&&(ae.tagName==='BUTTON'||ae.tagName==='INPUT'))return;
+e.preventDefault();goBtn.click();
+});
+document.addEventListener('visibilitychange',function(){if(!document.hidden&&running)tick();});
+var actx=null;
+function beep(){
+try{
+actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+if(actx.state==='suspended')actx.resume();
+var t0=actx.currentTime;
+for(var i=0;i<3;i++){
+var o=actx.createOscillator();
+var g=actx.createGain();
+o.type='sine';
+o.frequency.value=phase==='focus'?880:660;
+var ts=t0+i*0.22;
+g.gain.setValueAtTime(0,ts);
+g.gain.linearRampToValueAtTime(0.3,ts+0.02);
+g.gain.exponentialRampToValueAtTime(0.001,ts+0.18);
+o.connect(g);
+g.connect(actx.destination);
+o.start(ts);
+o.stop(ts+0.2);
+}
+}catch(err){}
+}
+setPhase('focus');
+showRounds();
+render(Math.floor(FOCUS/60),FOCUS%60,false);
+})();
+</script>
+</body>
+</html>

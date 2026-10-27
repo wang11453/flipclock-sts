@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>不用登录的翻页时钟：打开就用，关掉即走 | Flip 一刻</title>
+<meta name="description" content="没有注册、没有账号、没有验证码：翻页时钟不收集任何信息，打开页面就是全部功能。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/no-login-flip-clock.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="不用登录的翻页时钟：打开就用，关掉即走 | Flip 一刻">
+<meta property="og:description" content="没有注册、没有账号、没有验证码：翻页时钟不收集任何信息，打开页面就是全部功能。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/no-login-flip-clock.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+.hero{position:relative;z-index:2;padding:120px 20px 30px;max-width:660px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(30px,4.6vw,44px);font-weight:900;letter-spacing:.05em;line-height:1.2}
+.hero .sub{margin-top:18px;font-size:15.5px;line-height:1.85;color:rgba(236,232,226,.6)}
+.wrap{position:relative;z-index:2;max-width:660px;margin:0 auto;width:100%;padding:0 20px 100px}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:72px}
+.sec:first-of-type{margin-top:36px}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+.hero{padding-top:96px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.back{transition:none}.ftr a{transition:none}.row p a,.qa p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"翻页时钟 不用登录","url":"https://flipclock.sts.jx.cn/no-login-flip-clock.html","inLanguage":"zh-CN","description":"没有注册、没有账号、没有验证码：翻页时钟不收集任何信息，打开页面就是全部功能。","isPartOf":{"@type":"WebSite","name":"Flip 一刻","url":"https://flipclock.sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"以后会要登录吗？","acceptedAnswer":{"@type":"Answer","text":"看不出需要账号的理由，没有这个计划。工具归工具。"}},{"@type":"Question","name":"会有广告吗？","acceptedAnswer":{"@type":"Answer","text":"没有。页面里没有任何广告位，也没有推荐位。"}},{"@type":"Question","name":"本地存储能清掉吗？","acceptedAnswer":{"@type":"Answer","text":"能。清浏览器站点数据即可，偏好回到默认，像第一次打开一样。"}},{"@type":"Question","name":"不登录怎么保存我的番茄钟记录？","acceptedAnswer":{"@type":"Answer","text":"不保存，当日轮数只在你设备上，换天自动清零。这是设计，不是遗漏。"}},{"@type":"Question","name":"免费和不需要登录是一回事吗？","acceptedAnswer":{"@type":"Answer","text":"不是，但我们两个都做到了：不收费，也不要你的身份。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<header class="hero">
+<h1>翻页时钟 不用登录</h1>
+<p class="sub">打开别的网站先弹登录框，已经成了肌肉记忆级的烦躁。这台翻页钟反着来：没有注册页，没有账号体系，没有验证码，没有任何「先登录后使用」的门槛。你不需要告诉我们你是谁，页面也不会问。倒计时设的时长、秒表记的次数、番茄钟攒的轮数，全都留在你自己的设备上，出门不带、关掉不问。这一页把「不用登录」背后的取舍讲清楚：哪些数据存在哪里、换设备了怎么办、以及为什么这个工具打心底里觉得账号是多余的。如果你同样在意「页面背后有没有人在记东西」，隔壁那篇讲 <a href="offline-flip-clock.html">离线能力</a> 的文章是对这套说法的延伸验证。</p>
+</header>
+<main class="wrap">
+<section class="sec">
+<h2 class="lab">为什么不做账号</h2>
+<div class="row"><h3>钟不需要认识你</h3><p>没有云端同步、没有会员等级、没有个性化推荐，账号在这个产品里找不到一件非做不可的事，索性没有。<a href="clock.html">打开页面</a>就是全部功能，关掉标签页就是彻底退出。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">你的数据在哪</h2>
+<div class="row"><h3>只在你设备的浏览器里</h3><p>番茄钟的今日轮数、翻页声开关这类偏好，存在浏览器的本地存储里，只属于你这台设备的这个浏览器；我们没有后台数据库存你的任何记录，也没有第三方统计脚本。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">换设备怎么办</h2>
+<div class="row"><h3>三十秒的搬家</h3><p>无需迁移，因为本来就没有需要迁移的档案。新设备打开同一个网址，就是一台全新的钟；偏好重新点两下，成本低于找回密码。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">公司内网能用吗</h2>
+<div class="row"><h3>能</h3><p>页面加载完成后不再请求外网，内网策略只要放行一次加载就行；之后断网照常走时，具体边界见离线能力那篇。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">常见问题</h2>
+<div style="counter-reset:q">
+<div class="qa"><h3>以后会要登录吗？</h3><p>看不出需要账号的理由，没有这个计划。工具归工具。</p></div>
+<div class="qa"><h3>会有广告吗？</h3><p>没有。页面里没有任何广告位，也没有推荐位。</p></div>
+<div class="qa"><h3>本地存储能清掉吗？</h3><p>能。清浏览器站点数据即可，偏好回到默认，像第一次打开一样。</p></div>
+<div class="qa"><h3>不登录怎么保存我的番茄钟记录？</h3><p>不保存，当日轮数只在你设备上，换天自动清零。这是设计，不是遗漏。</p></div>
+<div class="qa"><h3>免费和不需要登录是一回事吗？</h3><p>不是，但我们两个都做到了：不收费，也不要你的身份。</p></div>
+</div>
+</section>
+</main>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">首页</a><a href="clock.html">全屏时钟</a><a href="countdown.html">倒计时</a><a href="guide.html">指南</a></nav></footer>
+</body>
+</html>

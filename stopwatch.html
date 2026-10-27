@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>翻页秒表 - 在线秒表计次，精确到百分秒 | Flip 一刻</title>
+<meta name="description" content="浏览器里的免费在线翻页秒表：翻页动效显示分秒，计次精确到 0.01 秒，空格键启停，无需下载，打开即用。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/stopwatch.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="翻页秒表 - 在线秒表计次，精确到百分秒 | Flip 一刻">
+<meta property="og:description" content="浏览器里的免费在线翻页秒表：翻页动效显示分秒，计次精确到 0.01 秒，空格键启停，无需下载，打开即用。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/stopwatch.html">
+<meta property="og:image" content="https://flipclock.sts.jx.cn/og-stopwatch.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="zh_CN">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="翻页秒表 - 在线秒表计次，精确到百分秒 | Flip 一刻">
+<meta name="twitter:description" content="浏览器里的免费在线翻页秒表：翻页动效显示分秒，计次精确到 0.01 秒，空格键启停，无需下载，打开即用。">
+<meta name="twitter:image" content="https://flipclock.sts.jx.cn/og-stopwatch.png">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--ch:min(38vh,24vw);
+--cw:calc(var(--ch)*.72);
+--gap:calc(var(--ch)*.07);
+--rad:calc(var(--ch)*.042);
+--dfs:calc(var(--ch)*.92);
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible,button:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+main{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:84px 20px 60px}
+.clockrow{position:relative;display:flex;gap:var(--gap);align-items:center}
+.clockrow::after{content:"";position:absolute;left:4%;right:4%;bottom:calc(var(--ch)*-.18);height:calc(var(--ch)*.15);background:radial-gradient(50% 100% at 50% 50%,rgba(0,0,0,.68),transparent 72%);filter:blur(10px);z-index:-1}
+.card{position:relative;display:flex;width:calc(var(--cw)*2);height:var(--ch);border-radius:var(--rad);overflow:hidden;box-shadow:0 2px 5px rgba(0,0,0,.5),0 calc(var(--ch)*.2) calc(var(--ch)*.42) rgba(0,0,0,.55),inset 0 1px 0 rgba(255,246,230,.06),inset 0 -1px 0 rgba(0,0,0,.55)}
+.card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#2e2b28 0%,#201d1b 38%,#0c0b0a 49.5%,#0c0b0a 50.5%,#1b1815 56%,#100e0c 100%)}
+.card::after{content:"";position:absolute;left:0;right:0;top:calc(50% - 3.2%);height:6.4%;background:linear-gradient(180deg,rgba(0,0,0,.3),rgba(0,0,0,.7) 48%,rgba(0,0,0,.7) 52%,rgba(0,0,0,.28));z-index:1;pointer-events:none}
+.seam{position:absolute;left:0;right:0;top:calc(50% - 2px);height:4px;background:#040403;z-index:6}
+.seam::after{content:"";position:absolute;left:0;right:0;top:calc(50% - 1px);height:1px;background:rgba(236,232,226,.3);box-shadow:0 0 7px rgba(236,232,226,.16)}
+.dg{position:relative;width:50%;height:100%;perspective:calc(var(--ch)*1.6)}
+.dg span{position:absolute;left:0;width:100%;height:50%;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.dg span::after{content:var(--d,"0");position:absolute;left:0;width:100%;height:200%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:var(--dfs);font-weight:400;letter-spacing:0;line-height:1;font-variant-numeric:tabular-nums;color:transparent;background:linear-gradient(180deg,#faf7f1 0%,#e6e1d8 55%,#c8c2b7 100%);-webkit-background-clip:text;background-clip:text;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5));transform:scaleX(.92) translateY(-.015em)}
+.h-t{top:0;z-index:2}
+.h-b{top:50%;z-index:2}
+.h-t::after{top:0}
+.h-b::after{top:-100%}
+.f-f{top:0;z-index:4;transform-origin:50% 100%;background:linear-gradient(180deg,#2c2a27,#211f1d);display:none;will-change:transform}
+.f-b{top:50%;z-index:3;transform-origin:50% 0%;background:linear-gradient(180deg,#131110,#0d0c0b);display:none;will-change:transform}
+.f-f::after{top:0}
+.f-b::after{top:-100%}
+.f-f::before,.f-b::before{content:"";position:absolute;inset:0;background:#000;opacity:0;pointer-events:none}
+.f-f.run{display:flex;animation:fdown .3s cubic-bezier(.4,.08,.55,.98) forwards}
+.f-b.run{display:flex;animation:fup .3s cubic-bezier(.4,.08,.55,.98) both}
+.f-f.run::before{animation:fshade .3s cubic-bezier(.4,0,.55,1) forwards}
+.f-b.run::before{animation:fshade2 .3s cubic-bezier(.4,0,.55,1) forwards}
+@keyframes fdown{from{transform:rotateX(0)}to{transform:rotateX(-180deg)}}
+@keyframes fup{from{transform:rotateX(180deg)}to{transform:rotateX(0)}}
+@keyframes fshade{from{opacity:0}to{opacity:.34}}
+@keyframes fshade2{from{opacity:.34}to{opacity:0}}
+.dg.fast .f-f.run{animation-duration:.12s}
+.dg.fast .f-b.run{animation-duration:.12s}
+.dg.fast .f-f.run::before{animation-duration:.12s}
+.dg.fast .f-b.run::before{animation-duration:.12s}
+.card.snap .seam::after{box-shadow:0 0 10px rgba(250,247,241,.5)}
+@media (prefers-reduced-motion: reduce){.f-f,.f-b{display:none!important}}
+.cs{margin-top:calc(var(--ch)*.14);font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:calc(var(--ch)*.2);letter-spacing:.14em;color:rgba(236,232,226,.5);font-variant-numeric:tabular-nums}
+.ctl{margin-top:34px;display:flex;gap:10px}
+.ctl button{font-size:13.5px;letter-spacing:.1em;padding:11px 30px;border-radius:2px;border:1px solid rgba(236,232,226,.3);background:rgba(236,232,226,.03);color:rgba(236,232,226,.75);cursor:pointer;transition:color .2s,border-color .2s,background .2s}
+.ctl button:hover{color:var(--ink);border-color:rgba(236,232,226,.55);background:rgba(236,232,226,.07)}
+.ctl button.pri{background:var(--ink);border-color:var(--ink);color:#17130f;font-weight:650}
+.ctl button.pri:hover{background:#fbf8f3;border-color:#fbf8f3}
+.laps{margin:30px auto 0;list-style:none;max-width:280px;width:100%;text-align:left;max-height:31vh;overflow-y:auto}
+.laps li{display:flex;justify-content:space-between;padding:7px 4px;border-bottom:1px solid var(--hair);font-size:13px;color:rgba(236,232,226,.55);font-variant-numeric:tabular-nums}
+.laps li b{color:rgba(236,232,226,.8);font-weight:600}
+.about{position:relative;z-index:2;border-top:1px solid var(--hair);padding:64px 20px 90px;background:linear-gradient(180deg,rgba(255,243,224,.014),transparent 30%)}
+.wrap{max-width:660px;margin:0 auto;text-align:left}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:60px}
+.lead{font-size:16px;line-height:1.95;color:rgba(236,232,226,.74)}
+.lead em{font-style:normal;color:var(--ink)}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+:root{--ch:min(26vh,19vw)}
+main{padding:74px 16px 50px}
+.ctl button{padding:10px 20px;font-size:12.5px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.ctl button{transition:none}.back{transition:none}.ftr a{transition:none}.row p a,.qa p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"翻页秒表","alternateName":"Flip 一刻","url":"https://flipclock.sts.jx.cn/stopwatch.html","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","inLanguage":"zh-CN","description":"浏览器里的免费在线翻页秒表：翻页动效显示分秒，计次精确到 0.01 秒，空格键启停，无需下载，打开即用。","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"author":{"@type":"Organization","name":"sts.jx.cn","url":"https://sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"首页","item":"https://flipclock.sts.jx.cn/"},{"@type":"ListItem","position":2,"name":"翻页秒表","item":"https://flipclock.sts.jx.cn/stopwatch.html"}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"精度是多少？","acceptedAnswer":{"@type":"Answer","text":"翻页卡显示到秒，百分秒以数字读数实时跟在下方；计次记录精确到 0.01 秒，误差来自你按键的手速，不来自表。"}},{"@type":"Question","name":"计次记录会保存吗？","acceptedAnswer":{"@type":"Answer","text":"不会。计次只存在于当前页面，刷新即清空。本站没有账号系统，也不向服务器上传任何数据。"}},{"@type":"Question","name":"能全屏吗？","acceptedAnswer":{"@type":"Answer","text":"能，浏览器自带全屏即可（F11 或菜单里的全屏）。挂在会议室大屏上做比赛或讨论计时非常直观。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<main>
+<div class="clockrow" id="face" role="timer" aria-label="翻页秒表">
+<div class="card">
+<span class="seam" aria-hidden="true"></span>
+<div class="dg" id="dM1" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+<div class="dg" id="dM2" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+</div>
+<div class="card">
+<span class="seam" aria-hidden="true"></span>
+<div class="dg" id="dS1" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+<div class="dg" id="dS2" data-v="0" aria-hidden="true"><span class="h-t"></span><span class="h-b"></span><span class="f-f"></span><span class="f-b"></span></div>
+</div>
+</div>
+<p class="cs" id="cs" aria-hidden="true">00</p>
+<div class="ctl">
+<button type="button" class="pri" id="go">开始</button>
+<button type="button" id="lap">计次</button>
+<button type="button" id="rst">重置</button>
+</div>
+<ol class="laps" id="laps" aria-label="计次记录"></ol>
+</main>
+<section class="about">
+<div class="wrap" style="counter-reset:q">
+<h1 class="lab">翻页秒表</h1>
+<p class="lead">一块会翻页的<em>秒表</em>。分和秒用翻页卡显示，跑起来每一秒都有一页「啪」地落下；百分秒以数字读数实时跟着走。空格键启停，不用记按钮位置，不用装任何东西。</p>
+<div class="sec">
+<h2 class="lab">计次怎么用</h2>
+<div class="row"><h3>启动与暂停</h3><p>点「开始」或按空格启动，再按一次暂停；暂停后可以继续，时间从暂停处接着走，不会清零。</p></div>
+<div class="row"><h3>计次</h3><p>跑表过程中点「计次」或按 L 键，当前时间记入下方列表，最多保留 60 条，每条精确到 0.01 秒。</p></div>
+<div class="row"><h3>重置</h3><p>暂停状态下点「重置」归零，计次列表一并清空。跑表中重置会先停表再归零。</p></div>
+</div>
+<div class="sec">
+<h2 class="lab">适合谁</h2>
+<div class="row"><h3>体育课与训练</h3><p>折返跑、跳绳、平板支撑，翻页的动静让全班都知道时间在走；计次记下每一组成绩，课后对着列表复盘。</p></div>
+<div class="row"><h3>实验与记录</h3><p>化学反应、种子发芽观察这类需要掐表的场合，0.01 秒精度够用，翻页形式也比一串裸数字不易看错。</p></div>
+<div class="row"><h3>游戏与竞速</h3><p>速拼、速算、魔方计时，空格启停比鼠标快，计次列表就是现成的成绩单。</p></div>
+</div>
+<div class="sec">
+<h2 class="lab">常见问题</h2>
+<div class="qa"><h3>精度是多少？</h3><p>翻页卡显示到秒，百分秒以数字读数实时跟在下方；计次记录精确到 0.01 秒，误差来自你按键的手速，不来自表。</p></div>
+<div class="qa"><h3>计次记录会保存吗？</h3><p>不会。计次只存在于当前页面，刷新即清空。本站没有账号系统，也不向服务器上传任何数据。</p></div>
+<div class="qa"><h3>能全屏吗？</h3><p>能，浏览器自带全屏即可（F11 或菜单里的全屏）。挂在会议室大屏上做比赛或讨论计时非常直观。</p></div>
+</div>
+</div>
+</section>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">翻页时钟</a><a href="countdown.html">倒计时</a><a href="pomodoro.html">番茄钟</a><a href="guide.html">指南</a></nav></footer>
+<script>
+(function(){
+var reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var units=['dM1','dM2','dS1','dS2'].map(function(i){return document.getElementById(i);});
+var csEl=document.getElementById('cs');
+var goBtn=document.getElementById('go');
+var lapBtn=document.getElementById('lap');
+var rstBtn=document.getElementById('rst');
+var laps=document.getElementById('laps');
+var face=document.getElementById('face');
+function pad(n){return (n<10?'0':'')+n;}
+function put(el,v){el.style.setProperty('--d','"'+v+'"');}
+function halves(u){return u.querySelectorAll('.h-t,.h-b');}
+function flipOnce(u,shown,target,fast){
+var st=halves(u);var ff=u.querySelector('.f-f');var fb=u.querySelector('.f-b');
+put(st[0],target);put(st[1],shown);put(ff,shown);put(fb,target);
+ff.classList.remove('run');fb.classList.remove('run');
+if(fast)u.classList.add('fast');else u.classList.remove('fast');
+void u.offsetWidth;ff.classList.add('run');fb.classList.add('run');
+var card=u.closest('.card');
+if(card&&fast===false&&u._casc){card.classList.add('snap');setTimeout(function(){card.classList.remove('snap');},140);}
+}
+function setDigit(u,v,anim){
+if(u._busy){u._want=v;return;}
+var cur=u.getAttribute('data-v');if(cur===v)return;
+u.setAttribute('data-v',v);
+var st=halves(u);var ff=u.querySelector('.f-f');var fb=u.querySelector('.f-b');
+if(!anim||reduced||!cur){put(st[0],v);put(st[1],v);put(ff,v);put(fb,v);return;}
+var num=parseInt(cur,10);var nv=parseInt(v,10);
+var d=(nv-num+10)%10;var steps=[];
+if(d>1&&d<=3){for(var i=1;i<=d;i++)steps.push(String((num+i)%10));}
+if(steps[steps.length-1]!==v||!steps.length)steps.push(v);
+u._casc=steps.length>1;
+u._busy=true;var shown=cur;var i=0;
+function next(){
+var target=steps[i];var last=i===steps.length-1;
+flipOnce(u,shown,target,!last);shown=target;i++;
+if(i<steps.length){u._t=setTimeout(next,128);}
+else{u._t=setTimeout(function(){u._busy=false;put(st[1],v);var w=u._want;u._want=undefined;if(w&&w!==u.getAttribute('data-v'))setDigit(u,w,true);},last?400:160);}
+}
+next();
+}
+function render(m,s,anim){
+setDigit(units[0],pad(m).charAt(0),anim);
+setDigit(units[1],pad(m).charAt(1),anim);
+setDigit(units[2],pad(s).charAt(0),anim);
+setDigit(units[3],pad(s).charAt(1),anim);
+face.setAttribute('aria-label','计时 '+pad(m)+':'+pad(s));
+}
+var running=false,acc=0,mark=0,lastS=-1,raf=null;
+function now(){return acc+(running?Date.now()-mark:0);}
+function drawCs(){var c=Math.floor((now()%1000)/10);csEl.textContent=c<10?'0'+c:''+c;}
+function frame(){
+drawCs();
+var s=Math.floor(now()/1000);
+if(s!==lastS){lastS=s;render(Math.floor(s/60)%100,s%60,true);}
+if(running)raf=requestAnimationFrame(frame);
+}
+function toggle(){
+if(running){acc=now();running=false;goBtn.textContent='继续';}
+else{mark=Date.now();running=true;goBtn.textContent='暂停';raf=requestAnimationFrame(frame);}
+}
+goBtn.addEventListener('click',toggle);
+lapBtn.addEventListener('click',doLap);
+rstBtn.addEventListener('click',function(){running=false;acc=0;lastS=-1;goBtn.textContent='开始';laps.innerHTML='';render(0,0,false);drawCs();});
+function doLap(){
+if(!running&&now()===0)return;
+var t=now();
+var m=Math.floor(t/60000),s=Math.floor(t/1000)%60,c=Math.floor((t%1000)/10);
+var li=document.createElement('li');
+li.innerHTML='<b>#'+(laps.children.length+1)+'</b><span>'+pad(m)+':'+pad(s)+'.'+(c<10?'0'+c:c)+'</span>';
+laps.appendChild(li);
+while(laps.children.length>60)laps.removeChild(laps.firstChild);
+laps.scrollTop=laps.scrollHeight;
+}
+document.addEventListener('keydown',function(e){
+if(e.code==='Space'){var ae=document.activeElement;if(ae&&ae.tagName==='BUTTON')return;e.preventDefault();toggle();}
+else if(e.code==='KeyL'){doLap();}
+});
+render(0,0,false);drawCs();
+})();
+</script>
+</body>
+</html>

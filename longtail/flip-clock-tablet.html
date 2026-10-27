@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>平板当翻页时钟：旧设备的安置指南 | Flip 一刻</title>
+<meta name="description" content="旧平板横过来就是一台床头钟或桌面钟：全屏、防息屏、竖屏三行显示，不用买任何硬件。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/flip-clock-tablet.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="平板当翻页时钟：旧设备的安置指南 | Flip 一刻">
+<meta property="og:description" content="旧平板横过来就是一台床头钟或桌面钟：全屏、防息屏、竖屏三行显示，不用买任何硬件。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/flip-clock-tablet.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+.hero{position:relative;z-index:2;padding:120px 20px 30px;max-width:660px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(30px,4.6vw,44px);font-weight:900;letter-spacing:.05em;line-height:1.2}
+.hero .sub{margin-top:18px;font-size:15.5px;line-height:1.85;color:rgba(236,232,226,.6)}
+.wrap{position:relative;z-index:2;max-width:660px;margin:0 auto;width:100%;padding:0 20px 100px}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:72px}
+.sec:first-of-type{margin-top:36px}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+.hero{padding-top:96px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.back{transition:none}.ftr a{transition:none}.row p a,.qa p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"翻页时钟 平板 大屏","url":"https://flipclock.sts.jx.cn/flip-clock-tablet.html","inLanguage":"zh-CN","description":"旧平板横过来就是一台床头钟或桌面钟：全屏、防息屏、竖屏三行显示，不用买任何硬件。","isPartOf":{"@type":"WebSite","name":"Flip 一刻","url":"https://flipclock.sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"OLED 屏幕长时间显示会烧屏吗？","acceptedAnswer":{"@type":"Answer","text":"OLED 长期静态画面确实有残影风险，建议隔段时间换换内容或调低亮度；LCD 没有这个顾虑。"}},{"@type":"Question","name":"能当闹钟吗？","acceptedAnswer":{"@type":"Answer","text":"目前没有闹钟功能，它的角色是钟不是闹钟；需求强烈的话欢迎反馈。"}},{"@type":"Question","name":"竖屏三行是自动的吗？","acceptedAnswer":{"@type":"Answer","text":"是。页面跟随设备方向自动切换横竖排布，不用手动设置。"}},{"@type":"Question","name":"充电整晚会伤电池吗？","acceptedAnswer":{"@type":"Answer","text":"现代设备充满后自动断充，整晚插电是常态用法，不必焦虑。"}},{"@type":"Question","name":"没有网络的地方能用吗？","acceptedAnswer":{"@type":"Answer","text":"页面加载完成后全部本地运行，无网照常走时。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<header class="hero">
+<h1>翻页时钟 平板 大屏</h1>
+<p class="sub">抽屉里那台换下来的旧平板，最体面的归宿就是变成一台钟。屏幕够大、电池扛用、横竖都能放，唯独缺一个好看的表盘——网页版翻页钟补的就是这一块。横过来是桌面钟，竖过来数字自动分成三行堆叠，床头柜上一放就是一台复古翻页闹钟的样子。这一页讲怎么把旧平板安置到位：怎么全屏、怎么防息屏、要不要加到主屏幕，以及旧设备跑不跑得动的诚实答案。安置好之后嫌屏幕老灭，去读 <a href="keep-screen-awake.html">屏幕常亮</a> 那篇；横竖排布的细节在 <a href="fullscreen-flip-clock.html">全屏说明</a> 里也有。</p>
+</header>
+<main class="wrap">
+<section class="sec">
+<h2 class="lab">横放与竖放</h2>
+<div class="row"><h3>方向自动感知</h3><p>横放是标准的三组大卡，适合桌面和展示架；竖放时页面会感知方向，把时、分、秒排成三行，每行一组，床头竖立正好看。系统旋转锁打开或关闭来配合即可。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">加到主屏幕</h2>
+<div class="row"><h3>从图标直达</h3><p>Safari 用「添加到主屏幕」，安卓各浏览器都有类似入口。之后从图标点开就是接近全屏的体验，不用每次找网址；再点<a href="clock.html">钟面</a>左下角按钮进入元素全屏。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">别让它熄屏</h2>
+<div class="row"><h3>全屏加插电</h3><p>点左下角按钮进入全屏，页面会申请保持唤醒，屏幕不中途熄灭；再配合插电，挂一整晚没有悬念。亮度建议按房间调低一档，夜里不刺眼。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">旧平板跑得动吗</h2>
+<div class="row"><h3>近十年的都行</h3><p>翻页动画只用到了浏览器最基础的合成能力，近十年的设备都很流畅；卡顿多来自系统后台，重启一次常能解决。离线场景的边界见 <a href="offline-flip-clock.html">离线能力说明</a>。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">常见问题</h2>
+<div style="counter-reset:q">
+<div class="qa"><h3>OLED 屏幕长时间显示会烧屏吗？</h3><p>OLED 长期静态画面确实有残影风险，建议隔段时间换换内容或调低亮度；LCD 没有这个顾虑。</p></div>
+<div class="qa"><h3>能当闹钟吗？</h3><p>目前没有闹钟功能，它的角色是钟不是闹钟；需求强烈的话欢迎反馈。</p></div>
+<div class="qa"><h3>竖屏三行是自动的吗？</h3><p>是。页面跟随设备方向自动切换横竖排布，不用手动设置。</p></div>
+<div class="qa"><h3>充电整晚会伤电池吗？</h3><p>现代设备充满后自动断充，整晚插电是常态用法，不必焦虑。</p></div>
+<div class="qa"><h3>没有网络的地方能用吗？</h3><p>页面加载完成后全部本地运行，无网照常走时。</p></div>
+</div>
+</section>
+</main>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">首页</a><a href="clock.html">全屏时钟</a><a href="countdown.html">倒计时</a><a href="guide.html">指南</a></nav></footer>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b0a09">
+<title>25 分钟翻页番茄钟：专注与休息自动轮转 | Flip 一刻</title>
+<meta name="description" content="25 分钟专注、5 分钟休息自动轮转，翻页显示剩余时间，完成轮数当日记录；时长可自定义。">
+<link rel="canonical" href="https://flipclock.sts.jx.cn/pomodoro-25.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Flip 一刻">
+<meta property="og:title" content="25 分钟翻页番茄钟：专注与休息自动轮转 | Flip 一刻">
+<meta property="og:description" content="25 分钟专注、5 分钟休息自动轮转，翻页显示剩余时间，完成轮数当日记录；时长可自定义。">
+<meta property="og:url" content="https://flipclock.sts.jx.cn/pomodoro-25.html">
+<meta property="og:locale" content="zh_CN">
+<link rel="icon" href="https://sts.jx.cn/static/bg/logo.webp">
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Bebas+Neue&display=swap">
+<style>
+:root{
+--bg:#0b0a09;
+--ink:#ece8e2;
+--hair:rgba(236,232,226,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{height:100%}
+body{min-height:100%;background:var(--bg);color:var(--ink);font-family:-apple-system,'Helvetica Neue','Segoe UI','PingFang SC','HarmonyOS Sans SC','Microsoft YaHei',sans-serif;-webkit-font-smoothing:antialiased;position:relative;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(58% 46% at 50% 6%,rgba(255,243,224,.075),transparent 72%);pointer-events:none;z-index:0}
+body::after{content:"";position:fixed;inset:0;background:radial-gradient(130% 130% at 50% 44%,transparent 50%,rgba(4,3,2,.6) 100%);pointer-events:none;z-index:0}
+.grain{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E")}
+a:focus-visible{outline:2px solid rgba(236,232,226,.6);outline-offset:3px;border-radius:2px}
+.back{position:fixed;top:18px;left:20px;z-index:20;font-size:13px;color:rgba(236,232,226,.45);text-decoration:none;padding-bottom:3px;border-bottom:1px solid transparent;transition:color .25s,border-color .25s}
+.back:hover{color:var(--ink);border-bottom-color:rgba(236,232,226,.55)}
+.hero{position:relative;z-index:2;padding:120px 20px 30px;max-width:660px;margin:0 auto;width:100%}
+.hero h1{font-size:clamp(30px,4.6vw,44px);font-weight:900;letter-spacing:.05em;line-height:1.2}
+.hero .sub{margin-top:18px;font-size:15.5px;line-height:1.85;color:rgba(236,232,226,.6)}
+.wrap{position:relative;z-index:2;max-width:660px;margin:0 auto;width:100%;padding:0 20px 100px}
+.lab{font-size:11.5px;font-weight:700;letter-spacing:.42em;color:rgba(236,232,226,.4);margin:0 0 26px}
+.sec{margin-top:72px}
+.sec:first-of-type{margin-top:36px}
+.row{padding:22px 0;border-bottom:1px solid var(--hair)}
+.row:first-of-type{border-top:1px solid var(--hair)}
+.row h3{font-size:15px;font-weight:650;color:var(--ink)}
+.row p{margin:9px 0 0;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.row p a,.qa p a{color:rgba(236,232,226,.85);text-decoration:none;padding-bottom:2px;border-bottom:1px solid rgba(236,232,226,.3);transition:border-color .25s,color .25s}
+.row p a:hover,.qa p a:hover{color:var(--ink);border-bottom-color:var(--ink)}
+.qa{counter-increment:q;padding:22px 0;border-bottom:1px solid var(--hair)}
+.qa:first-of-type{border-top:1px solid var(--hair)}
+.qa h3{position:relative;padding-left:56px;font-weight:650;font-size:15px;color:var(--ink)}
+.qa h3::before{content:counter(q,decimal-leading-zero);position:absolute;left:0;top:1px;font-family:'Bebas Neue','Helvetica Neue',Arial,sans-serif;font-size:26px;line-height:1;color:rgba(236,232,226,.24);font-variant-numeric:tabular-nums}
+.qa p{margin:10px 0 0 56px;font-size:14px;line-height:1.9;color:rgba(236,232,226,.58)}
+.ftr{position:relative;z-index:20;display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4vw,46px) 26px;border-top:1px solid var(--hair);font-size:12px;letter-spacing:.06em;color:rgba(236,232,226,.48)}
+.ftr nav{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end}
+.ftr a{color:rgba(236,232,226,.55);text-decoration:none;transition:color .25s}
+.ftr a:hover{color:var(--ink)}
+@media (max-width:640px){
+.hero{padding-top:96px}
+.qa h3{padding-left:46px;font-size:14.5px}
+.qa p{margin-left:46px}
+.ftr{flex-direction:column;gap:10px}
+.ftr nav{justify-content:center;gap:14px}
+}
+@media (prefers-reduced-motion: reduce){.back{transition:none}.ftr a{transition:none}.row p a,.qa p a{transition:none}}
+</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"翻页番茄钟 25 分钟","url":"https://flipclock.sts.jx.cn/pomodoro-25.html","inLanguage":"zh-CN","description":"25 分钟专注、5 分钟休息自动轮转，翻页显示剩余时间，完成轮数当日记录；时长可自定义。","isPartOf":{"@type":"WebSite","name":"Flip 一刻","url":"https://flipclock.sts.jx.cn/"}}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"刷新页面轮数还在吗？","acceptedAnswer":{"@type":"Answer","text":"当日刷新保留，隔天自动清零；轮数只存在你设备上，没有云端。"}},{"@type":"Question","name":"跳过的专注算一轮吗？","acceptedAnswer":{"@type":"Answer","text":"不算。只有完整翻到 00 的专注段才计数。"}},{"@type":"Question","name":"休息可以跳过吗？","acceptedAnswer":{"@type":"Answer","text":"可以，跳过键双向切换专注与休息，方向由当前段决定。"}},{"@type":"Question","name":"重置会清掉今日轮数吗？","acceptedAnswer":{"@type":"Answer","text":"不会。重置只回到专注段并停表，当日轮数保留。"}},{"@type":"Question","name":"声音能关吗？","acceptedAnswer":{"@type":"Answer","text":"阶段切换的哔声目前常开；音量跟随系统，不想扰人把系统音量收小。"}}]}
+</script>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<a class="back" href="index.html">← 首页</a>
+<header class="hero">
+<h1>翻页番茄钟 25 分钟</h1>
+<p class="sub">25 分钟专注，5 分钟休息——番茄工作法的经典节拍，被搬进了翻页钟。<a href="pomodoro.html">番茄钟页</a>里，专注意味着这 25 分钟里只有一件事，表盘上的翻页替你看着时间，翻到 00 就是收工的号角；休息则相反，5 分钟强制离开屏幕，起身、喝水、看窗外。两段自动轮转，不需要你在任何时刻碰按钮，节奏由钟维持，人只管干活。完成了几个番茄，表盘下方一排点阵给你记着，当日有效，隔天清零。这一页讲这套节拍怎么跑、哪里能改、以及跳过和重置的规矩。一次性的定时任务（泡面、会议）更适合用 <a href="countdown.html">倒计时</a>，两者分工见 <a href="guide.html">指南</a>。</p>
+</header>
+<main class="wrap">
+<section class="sec">
+<h2 class="lab">为什么是 25 分钟</h2>
+<div class="row"><h3>经典配比，不是铁律</h3><p>25/5 是番茄工作法沿用的经典配比：短到不产生畏惧，长到能推进正事。它不是铁律——表盘下方的设置行里，专注 1 到 120 分钟、休息 1 到 30 分钟随你改，点「应用」即生效并记住。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">轮转怎么跑</h2>
+<div class="row"><h3>一段接一段</h3><p>专注段翻到 00，哔一声自动进入休息；休息段翻到 00，再回到专注。全程不需要确认，你要做的只有第一下「开始」，以及结束时的「收工」。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">今日轮数</h2>
+<div class="row"><h3>点阵是你的战绩</h3><p>每完成一个专注段，今日轮数加一，点阵亮起一格；只存在你的浏览器里，隔天自动清零。跳过的专注段不算数，这是规则也是诚实。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">想改 50 加 10</h2>
+<div class="row"><h3>两下改完</h3><p>长任务党把专注改 50、休息改 10，应用后记在本地，下次打开还是你的节奏；改回 25/5 也一样两下。改完的画面效果和默认完全一致，只是翻得更慢。</p></div>
+</section>
+<section class="sec">
+<h2 class="lab">常见问题</h2>
+<div style="counter-reset:q">
+<div class="qa"><h3>刷新页面轮数还在吗？</h3><p>当日刷新保留，隔天自动清零；轮数只存在你设备上，没有云端。</p></div>
+<div class="qa"><h3>跳过的专注算一轮吗？</h3><p>不算。只有完整翻到 00 的专注段才计数。</p></div>
+<div class="qa"><h3>休息可以跳过吗？</h3><p>可以，跳过键双向切换专注与休息，方向由当前段决定。</p></div>
+<div class="qa"><h3>重置会清掉今日轮数吗？</h3><p>不会。重置只回到专注段并停表，当日轮数保留。</p></div>
+<div class="qa"><h3>声音能关吗？</h3><p>阶段切换的哔声目前常开；音量跟随系统，不想扰人把系统音量收小。</p></div>
+</div>
+</section>
+</main>
+<footer class="ftr"><span>sts.jx.cn 出品</span><nav><a href="index.html">首页</a><a href="clock.html">全屏时钟</a><a href="countdown.html">倒计时</a><a href="guide.html">指南</a></nav></footer>
+</body>
+</html>
